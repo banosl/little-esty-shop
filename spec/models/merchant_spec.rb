@@ -200,7 +200,7 @@ RSpec.describe Merchant, type: :model do
 # - Only invoices with at least one successful transaction should count towards revenue
     describe 'instance methods' do
       describe '#top_5_items_by_revenue' do
-        xit 'returns the top 5 items based off revenue generated' do
+        it 'returns the top 5 items based off revenue generated' do
 
         end
       end

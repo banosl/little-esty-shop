@@ -172,9 +172,8 @@ RSpec.describe 'Merchant Items Index page' do
 # - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price)
 
   describe 'User story 12' do
-    it 'displays the names of the top 5 most popular items (ranked by total revenue) as a link to merchant item show page' 
+    xit 'displays the names of the top 5 most popular items (ranked by total revenue) as a link to merchant item show page' 
       
-
-    it 'displays the total revenue generated next to each item name'
+    xit 'displays the total revenue generated next to each item name'
   end
 end
