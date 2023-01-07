@@ -216,7 +216,8 @@ RSpec.describe Invoice, type: :model do
 # - Only invoices with at least one successful transaction should count towards revenue
     describe 'instance methods' do
       describe '#revenue_for_invoice' do
-        xit 'returns the revenue for an invoice' do
+        it 'returns the revenue for an invoice' do
+          expect(@invoice_1.revenue_for_invoice).to eq(68175)
           # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
         end
       end

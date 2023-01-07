@@ -10,4 +10,8 @@ class Invoice < ApplicationRecord
   def self.incomplete_invoices 
     where(status: "in progress")
   end
+
+  def revenue_for_invoice
+    invoice_items.sum('unit_price * quantity')
+  end
 end
