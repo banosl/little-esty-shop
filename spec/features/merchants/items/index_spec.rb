@@ -119,6 +119,7 @@ RSpec.describe 'Merchant Items Index page' do
     end 
   end
 
+
   # As a merchant
   # When I visit my items index page
   # I see a link to create a new item.
@@ -145,6 +146,7 @@ RSpec.describe 'Merchant Items Index page' do
       expect(page).to have_content("Soccer Ball")
       expect(page).to have_content("Status: disabled")
     end
+
     it 'sad path - cannot create a new item if a field is empty' do
       visit new_merchant_item_path(@merchant_1.id)
 
@@ -156,5 +158,23 @@ RSpec.describe 'Merchant Items Index page' do
       expect(page).to have_content('Item was not created, please fill out all of the fields.')
       expect(page).to have_button('Submit')
     end
+  end
+
+# As a merchant
+# When I visit my items index page
+# Then I see the names of the top 5 most popular items ranked by total revenue generated
+# And I see that each item name links to my merchant item show page for that item
+# And I see the total revenue generated next to each item name
+
+# Notes on Revenue Calculation:
+# - Only invoices with at least one successful transaction should count towards revenue
+# - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
+# - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price)
+
+  describe 'User story 12' do
+    it 'displays the names of the top 5 most popular items (ranked by total revenue) as a link to merchant item show page' 
+      
+
+    it 'displays the total revenue generated next to each item name'
   end
 end
