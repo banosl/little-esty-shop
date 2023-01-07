@@ -140,7 +140,7 @@ RSpec.describe 'Merchant Items Index page' do
       fill_in 'Description', with: "black and white"
       fill_in 'Unit price', with: 22555
       click_button 'Submit'
-
+      
       expect(current_path).to eq(merchant_items_path(@merchant_1.id))
       expect(page).to have_content("Soccer Ball")
       # expect(page).to have_content("Status: disabled")

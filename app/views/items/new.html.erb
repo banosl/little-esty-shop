@@ -1,5 +1,6 @@
 <h1>Create a new item</h1>
 <%= form_with model: @item, url: merchant_items_path(params[:merchant_id]), local: true do |f| %>
+<%# <%= form_with url: "/merchants/#{@merchant.id}/items/#{@item.id}/new", local: true do |f| %> %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <br><br>
