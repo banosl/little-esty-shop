@@ -15,7 +15,7 @@ class Invoice < ApplicationRecord
     invoice_items.sum('unit_price * quantity')
   end
 
-  def revenue_for_invoice_item
-    # joins.invoice_items('unit_price * quantity')
+  def revenue_for_invoice_item(merchant)
+#  require 'pry'; binding.pry
   end
 end
