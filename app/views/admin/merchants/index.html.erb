@@ -8,7 +8,7 @@
 <%= link_to "Create a new merchant", new_admin_merchant_path %><br><br>
 
 <section id="top_merchants">
-<h3>Top 5 Merchants</h3>
+<h3>Top Merchants</h3>
 <ol>
   <% @top_5_merchants.each do |merchant| %>
     <li><%="#{merchant.name}"%></li>

@@ -1,7 +1,7 @@
 module Admin
   class Admin::MerchantsController < ApplicationController
     def index
-      @top_5_merchants = Merchant.top_5_merchants
+      @top_5_merchants = Merchant.top_5_merchants_by_revenue
       @enabled_merchants = Merchant.find_by_status('enabled')
       @disabled_merchants = Merchant.find_by_status('disabled')
     end
