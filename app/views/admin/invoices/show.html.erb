@@ -1,17 +1,54 @@
-<h1><center>Little Esty Shop<center></h1>
+<header>
+<h1 class="main-title"><center>Little Esty Shop<center></h1>
 
-<h2>Admin Dashboard</h2>
-
-
+<div class="sub-header">
+<h2 class="page-title">Admin Dashboard</h2>
+<nav class="navigation">
 <%= link_to "Dashboard", admin_index_path %>
 <%= link_to "Merchants", admin_merchants_path %>
 <%= link_to "Invoices", admin_invoices_path %><br><br>
+</nav>
+</div>
+</header>
 
-<h3><center>Invoice #<%= @invoice.id %><center></h3>
-
+<main>
+<h3 class="invoice-header"><center>Invoice #<%= @invoice.id %><center></h3>
+<section class="customer-info">
+<section class="status">
 <p>Status: <%= @invoice.status %></p>
+<%= button_to "update invoice" %>
+</section>
 
 <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
+<p>Total Revenue:<p>
 
 <h4>Customer:</h4>
-<%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %>
+<div class="customer-address">
+<p><%= @invoice.customer.full_name %></p>
+<p>address</p>
+<p>state</p>
+</div>
+</section>
+
+<section class="invoice-table" id="Items_Invoice">
+<h4>Items on this Invoice:</h4>
+
+<table>
+  <tr>
+    <th>Item Name</th>
+    <th>Quantity</th>
+    <th>Unit Price</th>
+    <th>Status</th>
+  </tr>
+ 
+  <% @invoice_items.each do |item| %>
+    <tr>
+      <td><%= item.item_name %></td>
+      <td><%= item.quantity %></td>
+      <td>$<%= item.unit_price_in_dollars %></td>
+      <td><%= item.status %></td>
+    </tr>
+  <% end %>
+</table>
+</section>
+</main>
