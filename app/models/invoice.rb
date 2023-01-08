@@ -19,7 +19,11 @@ class Invoice < ApplicationRecord
     transactions.where(result: "success").count > 0
   end
 
-  def total_revenue 
-    
+  def total_revenue
+    invoice_items.sum('unit_price * quantity')
+  end
+
+  def revenue_for_invoice_item(merchant)
+#  require 'pry'; binding.pry
   end
 end

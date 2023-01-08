@@ -10,7 +10,8 @@ RSpec.describe Invoice, type: :model do
     it {should have_many(:merchants).through(:items)}
   end
 
-  describe 'model methods' do 
+  describe 'admin merchant spec methods' do 
+    #follow up with teammates on renaming this block
     before :each do 
       @merchant_1 = Merchant.create!(name: 'Schroeder-Jerde')
       @merchant_2 = Merchant.create!(name: 'Rempel and Jones')
@@ -55,8 +56,7 @@ RSpec.describe Invoice, type: :model do
 
       @invoice_11 = @customer_6.invoices.create!(status: 'completed')
       @invoice_12 = @customer_6.invoices.create!(status: 'completed')
-  
-      #do i have to calculate the actual unit_price?
+
       InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
       InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
 
@@ -128,6 +128,72 @@ RSpec.describe Invoice, type: :model do
     it 'contains_successful_transaction?' do 
       expect(@invoice_1.contains_successful_transaction?).to eq(true)
       expect(@invoice_2.contains_successful_transaction?).to eq(false)
+    end
+  end
+
+  describe 'merchant items user stories' do
+    
+
+# As a merchant
+# When I visit my items index page
+# Then I see the names of the top 5 most popular items ranked by total revenue generated
+
+# Only invoices with at least one successful transaction should count towards revenue
+# - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
+# - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price)
+  describe 'instance methods' do
+    before :each do 
+      @merchant_1 = Merchant.create!(name: 'Schroeder-Jerde')
+      @merchant_2 = Merchant.create!(name: 'Rempel and Jones')
+    
+      @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
+      @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
+      @item_3 = @merchant_2.items.create!(name: 'Ea Voluptatum', description: 'Sunt officia eum qui molestiae', unit_price: 32301)
+      
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Ondricka')
+      @customer_2 = Customer.create!(first_name: 'Cecelia', last_name: 'Osinski')
+
+      @invoice_1 = @customer_1.invoices.create!(status: 'completed')
+      @invoice_2 = @customer_2.invoices.create!(status: 'completed')
+      @invoice_3 = @customer_1.invoices.create!(status: 'in progress')
+
+      InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 5, unit_price: 100, status: 'shipped')
+      InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 10, unit_price: 200, status: 'shipped')
+
+      InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 25, unit_price: 100, status: 'shipped')
+      InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 10, unit_price: 10, status: 'shipped')
+      
+      InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_3.id, quantity: 10, unit_price: 100, status: 'pending')
+      
+      @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
+      @transaction_2 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
+      
+      @transaction_3 = @invoice_2.transactions.create!(credit_card_number: '4580251236515201', credit_card_expiration_date: '03/22/20', result: 'success')
+
+      @transaction_4 = @invoice_3.transactions.create!(credit_card_number: '4354495077693036', credit_card_expiration_date: '09/22/20', result: 'failed')
+    end
+
+    ## got confused with how US 12 was presented and thought that these belong with US 12
+    ## these two blocks may belong to a later user story (maybe 17?)
+    ## keeping this here incase we need in future
+      describe '#total_revenue' do
+        xit 'returns the total revenue for all invoice items' do
+          expect(@invoice_1.total_revenue).to eq(3000)
+          expect(@invoice_2.total_revenue).to eq(2100)
+          # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
+          # find all the invoice_1; do (quantity * unit price) and sum those up
+        end
+      end
+        
+      describe '#revenue_for_invoice_item' do
+        xit 'can return the revenue for an invoice item' do
+          # - Revenue for an invoice item should be calculated as 
+          # the invoice item unit price multiplied by the quantity (do not use the item unit price) 
+          expect(@invoice_1.revenue_for_invoice_item(@merchant_1)).to eq(500)
+          # taking 1 invoice item and (quantity * unit price) to get the revenue for that 1 item
+          # will porbably have to make @invoice_item_1, etc
+        end
+      end 
     end
   end
 end
