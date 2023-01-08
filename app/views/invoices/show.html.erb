@@ -1,0 +1,11 @@
+<h1><center>Little Esty Shop<center></h1>
+
+<h2>Merchant Invoice Show Page</h2>
+
+<h3>Invoice Details:</h3>
+  <p>
+  <strong>Invoice Id: </strong><%= @invoice.id %><br>
+  <strong>Invoice Status: </strong><%= @invoice.status %><br>
+  <strong>Invoice Creation Date: </strong><%= @invoice.created_at.strftime("%A, %B %d, %Y") %><br>
+  <strong>Customer Name: </strong><%= @invoice.customer.full_name %>
+  </p> 
