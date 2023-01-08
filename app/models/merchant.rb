@@ -13,6 +13,10 @@ class Merchant < ApplicationRecord
     Merchant.where(status: merchant_status).order(updated_at: :desc)
   end
 
+  # def has_invoice_with_succesful_transaction? 
+  #   binding.pry
+  # end
+
   def unshipped_items 
     items.select(
           'items.*,
@@ -32,5 +36,14 @@ class Merchant < ApplicationRecord
       .group(:id)
       .order(revenue: :desc)
       .limit(5)
+  end
+
+  def self.top_5_merchants_by_revenue 
+    joins(:invoices, :transactions)
+    .where(transactions: {result: "success"})
+    .select("merchants.*, merchants.name as merchant_name, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
+    .group(:id)
+    .order(revenue: :desc)
+    .limit(5).to_a
   end
 end
