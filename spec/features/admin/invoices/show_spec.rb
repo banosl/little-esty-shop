@@ -43,16 +43,16 @@ RSpec.describe "Admin/Invoices/Show" do
       @invoice_11 = @customer_6.invoices.create!(status: 'cancelled')
       @invoice_12 = @customer_6.invoices.create!(status: 'cancelled')
 
-      InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
-      InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
+      @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
+      @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
 
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_2.id, quantity: 12, unit_price: 34873, status: 'packaged')
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_4.id, quantity: 8, unit_price: 2196, status: 'pending')
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_5.id, quantity: 3, unit_price: 79140, status: 'packaged')
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_1.id, quantity: 9, unit_price: 52100, status: 'shipped')
+      @invoice_item_3 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_2.id, quantity: 12, unit_price: 34873, status: 'packaged')
+      @invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_4.id, quantity: 8, unit_price: 2196, status: 'pending')
+      @invoice_item_5 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_5.id, quantity: 3, unit_price: 79140, status: 'packaged')
+      @invoice_item_6 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_1.id, quantity: 9, unit_price: 52100, status: 'shipped')
 
-      InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_7.id, quantity: 10, unit_price: 66747, status: 'shipped')
-      InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_8.id, quantity: 9, unit_price: 76941, status: 'packaged')
+      @invoice_item_6 = InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_7.id, quantity: 10, unit_price: 66747, status: 'shipped')
+      @invoice_item_7 = InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_8.id, quantity: 9, unit_price: 76941, status: 'packaged')
 
       @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
       @transaction_2 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
@@ -127,8 +127,19 @@ RSpec.describe "Admin/Invoices/Show" do
       invoice item status" do
         visit "/admin/invoices/#{@invoice_1.id}"
 
-        within ("#Items on this Invoice") do
-          expect(page).to have_content()
+        within ("#Items_Invoice") do
+          expect(page).to have_content("Item Name")
+          expect(page).to have_content("Quantity")
+          expect(page).to have_content("Unit Price")
+          expect(page).to have_content("Status")
+          expect(page).to have_content("#{@item_1.name}")
+          expect(page).to have_content("#{@invoice_item_1.unit_price}")
+          expect(page).to have_content("#{@invoice_item_1.status}")
+          expect(page).to have_content("#{@invoice_item_1.quantity}")
+          expect(page).to have_content("#{@item_2.name}")
+          expect(page).to have_content("#{@invoice_item_2.unit_price}")
+          expect(page).to have_content("#{@invoice_item_2.status}")
+          expect(page).to have_content("#{@invoice_item_2.quantity}")
         end
       end
     end
