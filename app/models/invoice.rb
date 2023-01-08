@@ -11,7 +11,11 @@ class Invoice < ApplicationRecord
     where(status: "in progress")
   end
 
-  def revenue_for_invoice
+  def total_revenue
     invoice_items.sum('unit_price * quantity')
+  end
+
+  def revenue_for_invoice_item
+    # joins.invoice_items('unit_price * quantity')
   end
 end
