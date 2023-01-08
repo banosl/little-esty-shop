@@ -45,6 +45,7 @@ group :development, :test do
   gem 'launchy'
   gem 'simplecov'
   gem 'orderly'
+  gem 'capybara_table'
 end
 
 group :development do
