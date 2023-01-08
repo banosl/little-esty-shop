@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe "Admin/Invoices/Index" do
   describe 'visiting admin invoices index' do
     before :each do
