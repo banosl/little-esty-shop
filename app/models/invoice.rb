@@ -10,4 +10,12 @@ class Invoice < ApplicationRecord
   def self.incomplete_invoices 
     where(status: "in progress")
   end
+
+  def total_revenue
+    invoice_items.sum('unit_price * quantity')
+  end
+
+  def revenue_for_invoice_item(merchant)
+#  require 'pry'; binding.pry
+  end
 end
