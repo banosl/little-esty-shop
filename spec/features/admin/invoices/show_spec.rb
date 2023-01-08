@@ -33,26 +33,26 @@ RSpec.describe "Admin/Invoices/Show" do
       @invoice_2 = @customer_1.invoices.create!(status: 'in progress', created_at: Time.new(2021))
       @invoice_3 = @customer_2.invoices.create!(status: 'in progress', created_at: Time.new(2022))
 
-      @invoice_4 = @customer_2.invoices.create!(status: 'cancelled')
-      @invoice_5 = @customer_3.invoices.create!(status: 'cancelled')
-      @invoice_6 = @customer_3.invoices.create!(status: 'cancelled')
+      @invoice_4 = @customer_2.invoices.create!(status: 'canceled')
+      @invoice_5 = @customer_3.invoices.create!(status: 'canceled')
+      @invoice_6 = @customer_3.invoices.create!(status: 'canceled')
       @invoice_7 = @customer_4.invoices.create!(status: 'in progress', created_at: Time.new(1995))
-      @invoice_8 = @customer_4.invoices.create!(status: 'cancelled')
-      @invoice_9 = @customer_5.invoices.create!(status: 'cancelled')
-      @invoice_10 = @customer_5.invoices.create!(status: 'cancelled')
-      @invoice_11 = @customer_6.invoices.create!(status: 'cancelled')
-      @invoice_12 = @customer_6.invoices.create!(status: 'cancelled')
+      @invoice_8 = @customer_4.invoices.create!(status: 'canceled')
+      @invoice_9 = @customer_5.invoices.create!(status: 'canceled')
+      @invoice_10 = @customer_5.invoices.create!(status: 'canceled')
+      @invoice_11 = @customer_6.invoices.create!(status: 'canceled')
+      @invoice_12 = @customer_6.invoices.create!(status: 'canceled')
 
-      InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
-      InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
+      @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
+      @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
 
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_2.id, quantity: 12, unit_price: 34873, status: 'packaged')
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_4.id, quantity: 8, unit_price: 2196, status: 'pending')
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_5.id, quantity: 3, unit_price: 79140, status: 'packaged')
-      InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_1.id, quantity: 9, unit_price: 52100, status: 'shipped')
+      @invoice_item_3 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_2.id, quantity: 12, unit_price: 34873, status: 'packaged')
+      @invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_4.id, quantity: 8, unit_price: 2196, status: 'pending')
+      @invoice_item_5 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_5.id, quantity: 3, unit_price: 79140, status: 'packaged')
+      @invoice_item_6 = InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_1.id, quantity: 9, unit_price: 52100, status: 'shipped')
 
-      InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_7.id, quantity: 10, unit_price: 66747, status: 'shipped')
-      InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_8.id, quantity: 9, unit_price: 76941, status: 'packaged')
+      @invoice_item_7 = InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_7.id, quantity: 10, unit_price: 66747, status: 'shipped')
+      @invoice_item_8 = InvoiceItem.create!(invoice_id: @invoice_3.id,  item_id: @item_8.id, quantity: 9, unit_price: 76941, status: 'packaged')
 
       @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
       @transaction_2 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
@@ -118,7 +118,48 @@ RSpec.describe "Admin/Invoices/Show" do
         expect(page).to have_content("Status: #{@invoice_3.status}")
         expect(page).to have_content("Created on: #{@invoice_3.created_at.strftime("%A, %B %d, %Y")}")
         expect(page).to have_content("Invoice ##{@invoice_3.id}")
-        expect(page).to have_content("#{@invoice_3.customer.first_name} #{@invoice_3.customer.last_name}")
+        expect(page).to have_content("#{@invoice_3.customer.full_name}")
+      end
+    end
+
+    describe "User Story 34" do
+      it "see all of the items on the invoice including: name, quantity of item ordered, price the item sold for
+      invoice item status" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+
+        within ("#Items_Invoice") do
+          expect(page).to have_content("Item Name")
+          expect(page).to have_content("Quantity")
+          expect(page).to have_content("Unit Price")
+          expect(page).to have_content("Status")
+          expect(page).to have_content("#{@invoice_item_1.item_name}")
+          expect(page).to have_content("#{@invoice_item_1.unit_price_in_dollars}")
+          expect(page).to have_content("#{@invoice_item_1.status}")
+          expect(page).to have_content("#{@invoice_item_1.quantity}")
+          expect(page).to have_content("#{@invoice_item_2.item_name}")
+          expect(page).to have_content("#{@invoice_item_2.unit_price_in_dollars}")
+          expect(page).to have_content("#{@invoice_item_2.status}")
+          expect(page).to have_content("#{@invoice_item_2.quantity}")
+        end
+
+        visit "/admin/invoices/#{@invoice_2.id}"
+
+        within ("#Items_Invoice") do
+          expect(page).to have_content("Item Name")
+          expect(page).to have_content("Quantity")
+          expect(page).to have_content("Unit Price")
+          expect(page).to have_content("Status")
+          expect(page).to have_content("#{@invoice_item_3.item_name}")
+          expect(page).to have_content("#{@invoice_item_4.unit_price_in_dollars}")
+          expect(page).to have_content("#{@invoice_item_5.status}")
+          expect(page).to have_content("#{@invoice_item_6.quantity}")
+          expect(page).to have_content("#{@invoice_item_3.item_name}")
+          expect(page).to have_content("#{@invoice_item_4.unit_price_in_dollars}")
+          expect(page).to have_content("#{@invoice_item_5.status}")
+          expect(page).to have_content("#{@invoice_item_6.quantity}")
+          expect(page).to_not have_content("#{@invoice_item_1.unit_price_in_dollars}")
+          expect(page).to_not have_content("#{@invoice_item_2.unit_price_in_dollars}")
+        end
       end
     end
   end
