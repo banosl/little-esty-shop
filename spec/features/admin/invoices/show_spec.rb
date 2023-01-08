@@ -152,9 +152,14 @@ RSpec.describe "Admin/Invoices/Show" do
 
     describe "User Story 35" do
       it 'see the total revenue that will be generated from this invoice' do
+        visit "/admin/invoices/#{@invoice_1.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_1.total_revenue_in_dollars}")
+        
         visit "/admin/invoices/#{@invoice_2.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_2.total_revenue_in_dollars}")
 
-        expect(@invoice_2.total_revenue).to eq()
+        visit "/admin/invoices/#{@invoice_3.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_3.total_revenue_in_dollars}")
       end
     end
   end
