@@ -18,4 +18,22 @@
 
 <section id="Items_Invoice">
 <h4>Items on this Invoice:</h4>
+
+<table>
+  <tr>
+    <th>Item Name</th>
+    <th>Quantity</th>
+    <th>Unit Price</th>
+    <th>Status</th>
+  </tr>
+ 
+  <% @invoice_items.each do |item| %>
+    <tr>
+      <td><%= item.item_name %></td>
+      <td><%= item.quantity %></td>
+      <td>$<%= item.unit_price_in_dollars %></td>
+      <td><%= item.status %></td>
+    </tr>
+  <% end %>
+</table>
 </section>
