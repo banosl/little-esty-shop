@@ -111,6 +111,16 @@ RSpec.describe InvoiceItem, type: :model do
     describe 'unit_price_in_dollars' do
       it 'turns the cents into dollars' do
         expect(@invoice_item_1.unit_price_in_dollars).to eq(136.35)
+        expect(@invoice_item_2.unit_price_in_dollars).to eq(233.24)
+        expect(@invoice_item_3.unit_price_in_dollars).to eq(348.73)
+      end
+    end
+
+    describe "item_name" do
+      it 'returns the name for the item on InvoiceItem' do
+        expect(@invoice_item_1.item_name).to eq("Qui Esse")
+        expect(@invoice_item_2.item_name).to eq("Autem Minima")
+        expect(@invoice_item_4.item_name).to eq("Nemo Facere")
       end
     end
   end

@@ -7,4 +7,8 @@ class InvoiceItem < ApplicationRecord
   def unit_price_in_dollars
     unit_price/100.to_f
   end
+
+  def item_name
+    Item.find(self.item_id).name
+  end
 end
