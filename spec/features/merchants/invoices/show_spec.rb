@@ -15,10 +15,10 @@ RSpec.describe 'Merchant Invoice Show Page' do
     @invoice_1 = @customer_1.invoices.create!(status: 'completed')
     @invoice_2 = @customer_2.invoices.create!(status: 'in progress', created_at: Time.new(2021))
   
-    InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
-    InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_3.id, quantity: 9, unit_price: 23324, status: 'shipped')
-    InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
-    InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_4.id, quantity: 9, unit_price: 23324, status: 'shipped')
+    @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
+    @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_3.id, quantity: 9, unit_price: 23324, status: 'shipped')
+    @invoice_item_3 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
+    @invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_4.id, quantity: 9, unit_price: 23324, status: 'shipped')
   end
   describe 'user story 15' do 
     # As a merchant
@@ -30,7 +30,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
     # - Customer first and last name
     it 'displays invoice attributes (id, status, created_at, customer name' do 
       visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
-      save_and_open_page
+
       expect(page).to have_content(@invoice_1.id)
       expect(page).to have_content(@invoice_1.status)
       expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %d, %Y"))
@@ -44,6 +44,40 @@ RSpec.describe 'Merchant Invoice Show Page' do
       expect(page).to have_content(@invoice_2.created_at.strftime("%A, %B %d, %Y"))
       expect(page).to have_content(@customer_2.full_name)
       expect(page).to_not have_content(@customer_1.full_name)
+    end
+  end
+
+  # As a merchant
+  # When I visit my merchant invoice show page
+  # Then I see all of my items on the invoice including:
+  # - Item name
+  # - The quantity of the item ordered
+  # - The price the Item sold for
+  # - The Invoice Item status
+  # And I do not see any information related to Items for other merchants
+  describe 'user story 16' do 
+    it 'displays all of the invoice items and attributes' do 
+      visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
+
+      expect(page).to have_content(@item_1.name)
+      expect(page).to have_content(@invoice_item_1.quantity)
+      expect(page).to have_content(@invoice_item_1.unit_price)
+      expect(page).to have_content(@invoice_item_1.status)
+      expect(page).to have_content(@item_3.name)
+      expect(page).to have_content(@invoice_item_2.quantity)
+      expect(page).to have_content(@invoice_item_2.unit_price)
+      expect(page).to have_content(@invoice_item_2.status)
+
+      visit merchant_invoice_path(@merchant_1.id, @invoice_2.id)
+
+      expect(page).to have_content(@item_2.name)
+      expect(page).to have_content(@invoice_item_3.quantity)
+      expect(page).to have_content(@invoice_item_3.unit_price)
+      expect(page).to have_content(@invoice_item_3.status)
+      expect(page).to have_content(@item_4.name)
+      expect(page).to have_content(@invoice_item_4.quantity)
+      expect(page).to have_content(@invoice_item_4.unit_price)
+      expect(page).to have_content(@invoice_item_4.status)
     end
   end
 end
