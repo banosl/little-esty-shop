@@ -121,5 +121,16 @@ RSpec.describe "Admin/Invoices/Show" do
         expect(page).to have_content("#{@invoice_3.customer.first_name} #{@invoice_3.customer.last_name}")
       end
     end
+
+    describe "User Story 34" do
+      it "see all of the items on the invoice including: name, quantity of item ordered, price the item sold for
+      invoice item status" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+
+        within ("#Items on this Invoice") do
+          expect(page).to have_content()
+        end
+      end
+    end
   end
 end
