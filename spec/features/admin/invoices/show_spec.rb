@@ -149,5 +149,13 @@ RSpec.describe "Admin/Invoices/Show" do
         end
       end
     end
+
+    describe "User Story 35" do
+      it 'see the total revenue that will be generated from this invoice' do
+        visit "/admin/invoices/#{@invoice_2.id}"
+
+        expect(@invoice_2.total_revenue).to eq()
+      end
+    end
   end
 end
