@@ -111,7 +111,7 @@ RSpec.describe 'Merchant Items Index page' do
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/items/#{@item_1.id}")
     end
   end
-  
+    
 # As a merchant
 # When I visit my items index page ("merchants/merchant_id/items")
 # Next to each item name I see a button to disable or enable that item.
@@ -184,7 +184,7 @@ RSpec.describe 'Merchant Items Index page' do
   describe 'user story 11' do 
     it 'displays a link to create a new item' do
       visit merchant_items_path(@merchant_1.id)
- 
+
       click_link('Create a new item')
 
       expect(current_path).to eq(new_merchant_item_path(@merchant_1.id))
@@ -222,14 +222,12 @@ RSpec.describe 'Merchant Items Index page' do
     it 'displays the names of the top 5 most popular items (ranked by total revenue) as a link to merchant item show page' do
       visit merchant_items_path(@merchant_1.id)
 
-      within("#popular_items_#{@merchant_1.id}")
+      within("#popular_items_#{@merchant_1.id}") do
         expect(page).to have_link("#{@item_5.name}")
         expect("#{@item_7.name}").to appear_before("#{@item_5.name}")
         expect("#{@item_5.name}").to appear_before("#{@item_2.name}")
         expect("#{@item_5.name}").to appear_before("#{@item_6.name}")
         expect("#{@item_4.name}").to_not appear_before("#{@item_7.name}")
-
-        # expect(@merchant_1.top_5_items_by_revenue).to eq([@item_7, @item_5, @item_2, @item_6, @item_4])
       end
     end
       
@@ -238,6 +236,7 @@ RSpec.describe 'Merchant Items Index page' do
 
       within("#popular_items_#{@merchant_1.id}") do
         expect(page).to have_content('in sales')
+        expect(page).to have_content('Top Items')
         expect(page).to have_content(@merchant_1.top_5_items_by_revenue[0].revenue)
         expect(page).to have_content(@merchant_1.top_5_items_by_revenue[1].revenue)
         expect(page).to have_content(@merchant_1.top_5_items_by_revenue[2].revenue)
@@ -245,4 +244,5 @@ RSpec.describe 'Merchant Items Index page' do
         expect(page).to have_content(@merchant_1.top_5_items_by_revenue[4].revenue)
       end
     end
+  end
 end
