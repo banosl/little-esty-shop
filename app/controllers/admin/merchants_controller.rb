@@ -1,5 +1,5 @@
 module Admin
-  class MerchantsController < ApplicationController
+  class Admin::MerchantsController < ApplicationController
     def index
       @enabled_merchants = Merchant.find_by_status('enabled')
       @disabled_merchants = Merchant.find_by_status('disabled')
@@ -34,9 +34,19 @@ module Admin
       end
     end
 
+    def new 
+      @merchant = Merchant.new
+    end
+
+    def create 
+      merchant = Merchant.create(merchant_params) 
+      merchant.save
+      redirect_to admin_merchants_path
+    end
+
 private 
     def merchant_params
-      params.permit(:status, :name)
+      params.require(:merchant).permit(:status, :name)
     end
   end
 end

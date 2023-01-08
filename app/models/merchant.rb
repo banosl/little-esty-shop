@@ -1,3 +1,4 @@
+
 class Merchant < ApplicationRecord
 
   enum status: { disabled: 0, enabled: 1 }

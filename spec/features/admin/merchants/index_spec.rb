@@ -136,6 +136,7 @@ RSpec.describe "Admin/Merchant/Index" do
     describe 'user story 27' do 
       it 'displays enable and disable buttons next to each merchant' do 
         visit '/admin/merchants'
+        save_and_open_page
         expect(page).to have_button("enable", id: @merchant_1.id)
         expect(page).to have_button("disable", id: @merchant_2.id)
         expect(page).to have_button("enable", id: @merchant_3.id)
