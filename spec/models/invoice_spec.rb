@@ -122,7 +122,7 @@ RSpec.describe Invoice, type: :model do
     end 
 
     it 'revenue' do 
-      @invoice_1.total_revenue
+      expect(@invoice_1.total_revenue).to eq(278091)
     end
 
     it 'contains_successful_transaction?' do 

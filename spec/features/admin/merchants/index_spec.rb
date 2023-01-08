@@ -6,6 +6,9 @@ RSpec.describe "Admin/Merchant/Index" do
       @merchant_1 = Merchant.create!(name: 'Schroeder-Jerde', status: :disabled)
       @merchant_2 = Merchant.create!(name: 'Rempel and Jones', status: :enabled)
       @merchant_3 = Merchant.create!(name: 'Willms and Sons', status: :disabled)
+      @merchant_4 = Merchant.create!(name: 'Merchant 4', status: :disabled)
+      @merchant_5 = Merchant.create!(name: 'Merchant 5', status: :enabled)
+      @merchant_6 = Merchant.create!(name: 'Merchant 6', status: :disabled)
 
       @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
       @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
@@ -179,9 +182,9 @@ RSpec.describe "Admin/Merchant/Index" do
     describe 'user story 30' do 
       it 'displays top 5 merchants based on total revenue generated' do 
         visit admin_merchants_path
-        # within('#top_customers') do 
+        within('#top_customers') do 
           
-        # end
+        end
       end
     end
   end
