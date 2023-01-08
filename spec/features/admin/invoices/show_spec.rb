@@ -118,7 +118,7 @@ RSpec.describe "Admin/Invoices/Show" do
         expect(page).to have_content("Status: #{@invoice_3.status}")
         expect(page).to have_content("Created on: #{@invoice_3.created_at.strftime("%A, %B %d, %Y")}")
         expect(page).to have_content("Invoice ##{@invoice_3.id}")
-        expect(page).to have_content("#{@invoice_3.customer.first_name} #{@invoice_3.customer.last_name}")
+        expect(page).to have_content("#{@invoice_3.customer.full_name}")
       end
     end
 

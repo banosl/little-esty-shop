@@ -14,7 +14,7 @@
 <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
 
 <h4>Customer:</h4>
-<%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %>
+<%= @invoice.customer.full_name %>
 
 <section id="Items_Invoice">
 <h4>Items on this Invoice:</h4>
