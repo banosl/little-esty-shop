@@ -10,5 +10,5 @@
 <h3><center>Invoices<center></h3>
 
 <% @invoices.each do |invoice| %>
-  Invoice #<%= invoice.id %>
+  <%= link_to "Invoice ##{invoice.id}", "/admin/invoices/#{invoice.id}" %>%
 <% end %>

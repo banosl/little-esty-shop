@@ -114,7 +114,15 @@ RSpec.describe "Admin/Invoices/Index" do
         expect(page).to have_content("Invoice ##{@invoice_5.id}")
       end
 
-      it 'Each id links to the admin invoice show page'
+      it 'Each id links to the admin invoice show page' do
+        visit '/admin/invoices'
+
+        expect(page).to have_link("Invoice ##{@invoice_1.id}", :href => "/admin/invoices/#{@invoice_1.id}")
+        expect(page).to have_link("Invoice ##{@invoice_2.id}", :href => "/admin/invoices/#{@invoice_2.id}")
+        expect(page).to have_link("Invoice ##{@invoice_3.id}", :href => "/admin/invoices/#{@invoice_3.id}")
+        expect(page).to have_link("Invoice ##{@invoice_4.id}", :href => "/admin/invoices/#{@invoice_4.id}")
+        expect(page).to have_link("Invoice ##{@invoice_5.id}", :href => "/admin/invoices/#{@invoice_5.id}")
+      end
     end
   end
 end
