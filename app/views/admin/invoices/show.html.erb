@@ -20,7 +20,7 @@
 <p class='status_colon'>Status:
 
 <%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
-<%= form.select :status, ["in progress", "completed", "canceled"], selected: @invoice.status %>
+<%= form.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
 <%= form.submit "Update Status", class: 'submit' %>
 <% end %>
 </section>
