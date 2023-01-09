@@ -30,7 +30,7 @@
   <h3>Top Items</h3>
   <% @merchant.top_5_items_by_revenue.each do |item| %>
     <li><%=link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %> $<%= item.revenue %> in sales </li>
-    <p>Top selling date for <%= item.name %> was <%= item.top_item_selling_date.strftime('%d/%m/%y') %></li></p><br>
+    <p>Top selling date for <%= item.name %> was <%= item.top_item_selling_date.strftime('%m/%d/%y') %></li></p><br>
   <% end %>
  </div>
 
