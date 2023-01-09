@@ -66,11 +66,11 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
       expect(page).to have_content(@item_1.name)
       expect(page).to have_content(@invoice_item_1.quantity)
-      expect(page).to have_content(@invoice_item_1.unit_price)
+      expect(page).to have_content(@invoice_item_1.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_1.status)
       expect(page).to have_content(@item_3.name)
       expect(page).to have_content(@invoice_item_2.quantity)
-      expect(page).to have_content(@invoice_item_2.unit_price)
+      expect(page).to have_content(@invoice_item_2.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_2.status)
       expect(page).to have_content(@invoice_item_2.status)
       expect(page).to_not have_content(@item_5.name)
@@ -79,12 +79,50 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
       expect(page).to have_content(@item_2.name)
       expect(page).to have_content(@invoice_item_3.quantity)
-      expect(page).to have_content(@invoice_item_3.unit_price)
+      expect(page).to have_content(@invoice_item_3.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_3.status)
       expect(page).to have_content(@item_4.name)
       expect(page).to have_content(@invoice_item_4.quantity)
-      expect(page).to have_content(@invoice_item_4.unit_price)
+      expect(page).to have_content(@invoice_item_4.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_4.status)
+    end
+  end
+  # When I visit my merchant invoice show page
+  # Then I see the total revenue that will be generated from all of my items on the invoice
+  describe 'user story 17' do
+    it 'displays the total revenue from all items on the invoice' do 
+      visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
+
+      expect(page).to have_content(@invoice_1.total_revenue)
+      expect(page).to_not have_content(@invoice_3.total_revenue)
+    end
+  end
+  # As a merchant
+  # When I visit my merchant invoice show page
+  # I see that each invoice item status is a select field
+  # And I see that the invoice item's current status is selected
+  # When I click this select field,
+  # Then I can select a new status for the Item,
+  # And next to the select field I see a button to "Update Item Status"
+  # When I click this button
+  # I am taken back to the merchant invoice show page
+  # And I see that my Item's status has now been updated
+  describe 'user story 18' do 
+    it 'displays the invoice item status as a select field' do 
+      visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
+
+      within("#invoice_item-#{@invoice_item_1.id}") do
+        expect(page).to have_field(:status, with: "shipped")
+           
+        select "packaged", from: :status
+        click_button "Update Item Status"
+      end      
+
+      expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_1.item_name}")
+      expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_1.quantity}")
+      expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_1.unit_price_in_dollars}")
+      expect(find(:table, "Items")).to have_table_row("Status" => "packaged")
+      expect(current_path).to eq(merchant_invoice_path(@merchant_1.id, @invoice_1.id))
     end
   end
 end
