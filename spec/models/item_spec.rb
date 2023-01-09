@@ -84,7 +84,6 @@ RSpec.describe Item, type: :model do
     @transaction_12 = @invoice_10.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
   end
 
-
     # As a merchant
 # When I visit my items index page
 # Then next to each of the 5 most popular items I see the date with the most sales for each item.
@@ -92,7 +91,7 @@ RSpec.describe Item, type: :model do
 # Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
   describe '#top_item_selling_date' do
     it 'returns the date that an item sold the most in quantity' do
-      expect(@item_1.top_item_selling_date).to eq('year-month-day hour:minute:seconds')
+      expect(@item_7.top_item_selling_date.strftime('%d/%m/%y')).to eq(@invoice_6.created_at.strftime('%d/%m/%y'))
     end
   end
 end

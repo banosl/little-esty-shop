@@ -255,9 +255,10 @@ RSpec.describe 'Merchant Items Index page' do
       it 'I see the date with the most sales for each item' do
         visit merchant_items_path(@merchant_1.id)
 
+        date = @item_7.created_at.strftime('%d/%m/%y')
+
         within("#popular_items_#{@merchant_1.id}") do
-          expect(page).to have_content("Top selling date for '#{@item_7.name}' was ")
-          expect(page).to have_content("Top selling date for '#{@item_5.name}' was ")
+          expect(page).to have_content("Top selling date for #{@item_7.name} was #{date}")
         end
       end
     end
