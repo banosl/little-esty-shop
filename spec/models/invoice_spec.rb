@@ -129,6 +129,12 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.contains_successful_transaction?).to eq(true)
       expect(@invoice_2.contains_successful_transaction?).to eq(false)
     end
+
+    it 'price_in_dollars' do
+      expect(@invoice_1.total_revenue_in_dollars).to eq(2780.91)
+      expect(@invoice_2.total_revenue_in_dollars).to eq(11423.64)
+      expect(@invoice_3.total_revenue_in_dollars).to eq(13599.39)
+    end
   end
 
   describe 'merchant items user stories' do

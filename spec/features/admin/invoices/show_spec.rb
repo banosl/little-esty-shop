@@ -33,15 +33,15 @@ RSpec.describe "Admin/Invoices/Show" do
       @invoice_2 = @customer_1.invoices.create!(status: 'in progress', created_at: Time.new(2021))
       @invoice_3 = @customer_2.invoices.create!(status: 'in progress', created_at: Time.new(2022))
 
-      @invoice_4 = @customer_2.invoices.create!(status: 'canceled')
-      @invoice_5 = @customer_3.invoices.create!(status: 'canceled')
-      @invoice_6 = @customer_3.invoices.create!(status: 'canceled')
+      @invoice_4 = @customer_2.invoices.create!(status: 'cancelled')
+      @invoice_5 = @customer_3.invoices.create!(status: 'cancelled')
+      @invoice_6 = @customer_3.invoices.create!(status: 'cancelled')
       @invoice_7 = @customer_4.invoices.create!(status: 'in progress', created_at: Time.new(1995))
-      @invoice_8 = @customer_4.invoices.create!(status: 'canceled')
-      @invoice_9 = @customer_5.invoices.create!(status: 'canceled')
-      @invoice_10 = @customer_5.invoices.create!(status: 'canceled')
-      @invoice_11 = @customer_6.invoices.create!(status: 'canceled')
-      @invoice_12 = @customer_6.invoices.create!(status: 'canceled')
+      @invoice_8 = @customer_4.invoices.create!(status: 'cancelled')
+      @invoice_9 = @customer_5.invoices.create!(status: 'cancelled')
+      @invoice_10 = @customer_5.invoices.create!(status: 'cancelled')
+      @invoice_11 = @customer_6.invoices.create!(status: 'cancelled')
+      @invoice_12 = @customer_6.invoices.create!(status: 'cancelled')
 
       @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
       @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
@@ -128,38 +128,38 @@ RSpec.describe "Admin/Invoices/Show" do
         visit "/admin/invoices/#{@invoice_1.id}"
 
         within ("#Items_Invoice") do
-          expect(page).to have_content("Item Name")
-          expect(page).to have_content("Quantity")
-          expect(page).to have_content("Unit Price")
-          expect(page).to have_content("Status")
-          expect(page).to have_content("#{@invoice_item_1.item_name}")
-          expect(page).to have_content("#{@invoice_item_1.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_1.status}")
-          expect(page).to have_content("#{@invoice_item_1.quantity}")
-          expect(page).to have_content("#{@invoice_item_2.item_name}")
-          expect(page).to have_content("#{@invoice_item_2.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_2.status}")
-          expect(page).to have_content("#{@invoice_item_2.quantity}")
+
+          expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_1.item_name}")
+          expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_1.quantity}")
+          expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_1.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Status" => "#{@invoice_item_1.status}")
+          expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_2.item_name}")
+          expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_2.quantity}")
+          expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_2.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Status" => "#{@invoice_item_2.status}")
         end
 
         visit "/admin/invoices/#{@invoice_2.id}"
 
         within ("#Items_Invoice") do
-          expect(page).to have_content("Item Name")
-          expect(page).to have_content("Quantity")
-          expect(page).to have_content("Unit Price")
-          expect(page).to have_content("Status")
-          expect(page).to have_content("#{@invoice_item_3.item_name}")
-          expect(page).to have_content("#{@invoice_item_4.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_5.status}")
-          expect(page).to have_content("#{@invoice_item_6.quantity}")
-          expect(page).to have_content("#{@invoice_item_3.item_name}")
-          expect(page).to have_content("#{@invoice_item_4.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_5.status}")
-          expect(page).to have_content("#{@invoice_item_6.quantity}")
-          expect(page).to_not have_content("#{@invoice_item_1.unit_price_in_dollars}")
-          expect(page).to_not have_content("#{@invoice_item_2.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_3.item_name}")
+          expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_4.quantity}")
+          expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_5.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Status" => "#{@invoice_item_6.status}")
         end
+      end
+    end
+
+    describe "User Story 35" do
+      it 'see the total revenue that will be generated from this invoice' do
+        visit "/admin/invoices/#{@invoice_1.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_1.total_revenue_in_dollars}")
+        
+        visit "/admin/invoices/#{@invoice_2.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_2.total_revenue_in_dollars}")
+
+        visit "/admin/invoices/#{@invoice_3.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_3.total_revenue_in_dollars}")
       end
     end
   end

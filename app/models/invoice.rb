@@ -26,4 +26,8 @@ class Invoice < ApplicationRecord
   def revenue_for_invoice_item(merchant)
 #  require 'pry'; binding.pry
   end
+
+  def total_revenue_in_dollars
+    total_revenue/100.to_f
+  end
 end

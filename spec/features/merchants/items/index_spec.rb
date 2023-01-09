@@ -244,5 +244,28 @@ RSpec.describe 'Merchant Items Index page' do
         expect(page).to have_content(@merchant_1.top_5_items_by_revenue[4].revenue)
       end
     end
+
+# As a merchant
+# When I visit my items index page
+# Then next to each of the 5 most popular items I see the date with the most sales for each item.
+# And I see a label “Top selling date for <item name> was <date with most sales>"
+# Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
+
+    describe 'User story 13' do
+      it 'I see the date with the most sales for each item' do
+        visit merchant_items_path(@merchant_1.id)
+
+        date = @item_7.created_at.strftime('%d/%m/%y')
+
+        within("#popular_items_#{@merchant_1.id}") do
+          expect(page).to have_content("Top selling date for #{@item_7.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_5.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_4.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_6.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_2.name} was #{date}")
+          expect(page).to_not have_content("Top selling date for #{@item_1.name} was #{date}")
+        end
+      end
+    end
   end
 end
