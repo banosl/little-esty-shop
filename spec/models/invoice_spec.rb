@@ -120,6 +120,12 @@ RSpec.describe Invoice, type: :model do
     it 'incomplete_invoices' do 
       expect(Invoice.incomplete_invoices).to match([@invoice_2, @invoice_3])
     end
+
+    it 'price_in_dollars' do
+      expect(@invoice_1.total_revenue_in_dollars).to eq(2780.91)
+      expect(@invoice_2.total_revenue_in_dollars).to eq(11423.64)
+      expect(@invoice_3.total_revenue_in_dollars).to eq(13599.39)
+    end
   end
 
   describe 'merchant items user stories' do
