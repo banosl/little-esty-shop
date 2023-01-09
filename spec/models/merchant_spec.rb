@@ -413,6 +413,7 @@ RSpec.describe Merchant, type: :model do
 
       @transaction_16 = @invoice_14.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
 
+      @transaction_17 = @invoice_15.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
       # @transaction_13 = @invoice_11.transactions.create!(credit_card_number: '9856503416578382', credit_card_expiration_date: '08/25/20', result: 'failed')
       # @transaction_14 = @invoice_11.transactions.create!(credit_card_number: '9856503416578382', credit_card_expiration_date: '08/25/20', result: 'failed')
 
@@ -449,10 +450,10 @@ RSpec.describe Merchant, type: :model do
       it 'returns the date with the most sales' do 
         expect(@merchant_8.top_selling_date).to eq(@invoice_item_21.created_at)
 
-      #   @invoice_item_22 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 15, unit_price: 1, status: 'shipped')
-      #   @invoice_item_23 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 1, unit_price: 1, status: 'shipped')
+        @invoice_item_22 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 15, unit_price: 1, status: 'shipped')
+        @invoice_item_23 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 1, unit_price: 1, status: 'shipped')
 
-      #   expect(@merchant_8.top_selling_date).to eq(@invoice_22.created_at)
+        expect(@merchant_8.top_selling_date).to eq(@invoice_item_22.created_at)
       end
     end
   end
