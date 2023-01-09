@@ -3,27 +3,37 @@
 <h2>Merchant Invoice Show Page</h2>
 
 <h3>Invoice Details:</h3>
+ <strong>Total Revenue: </strong>$<%= @invoice.total_revenue %><br>
   <p>
   <strong>Invoice Id: </strong><%= @invoice.id %><br>
   <strong>Invoice Status: </strong><%= @invoice.status %><br>
   <strong>Invoice Creation Date: </strong><%= @invoice.created_at.strftime("%A, %B %d, %Y") %><br>
   <strong>Customer Name: </strong><%= @invoice.customer.full_name %><br>
   <strong>Invoice Items: </strong><br>
-    <% @invoice.items.each do |item| %>
-    <div id="item-<%= item.id %>">
-      <%= item.name %><br>
-      <%  item.invoice_items.each do |invoice_item| %>
-        <%= invoice_item.quantity %><br>
-        <%= invoice_item.unit_price %><br>
-        <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true do |f| %>
+  
+  <table>
+  <caption hidden>Items</caption>
+    <tr>
+      <th>Item Name</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Status</th>
+    </tr>
+  
+    <% @invoice_items.each do |invoice_item| %>
+      <tr>
+      <div id="invoice_item-<%= invoice_item.id %>">
+        <td><%= invoice_item.item_name %></td>
+        <td><%= invoice_item.quantity %></td>
+        <td>$<%= invoice_item.unit_price_in_dollars %></td>
+        <td><%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true do |f| %>
           <%= f.select :status, ["pending", "packaged", "shipped"], selected: invoice_item.status %>
           <%= f.hidden_field :invoice_item_id, value: invoice_item.id %>
           <%= f.submit "Update Item Status" %>
-        <% end %>
-        ---------------------------<br>
-      <% end %>
+          <% end %></td>
       </div>
+      </tr>
     <% end %>
-  </p> 
+</table>
 
-  <strong>Total Revenue: </strong><%= @invoice.total_revenue %><br>
+ 

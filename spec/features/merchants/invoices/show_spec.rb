@@ -66,11 +66,11 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
       expect(page).to have_content(@item_1.name)
       expect(page).to have_content(@invoice_item_1.quantity)
-      expect(page).to have_content(@invoice_item_1.unit_price)
+      expect(page).to have_content(@invoice_item_1.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_1.status)
       expect(page).to have_content(@item_3.name)
       expect(page).to have_content(@invoice_item_2.quantity)
-      expect(page).to have_content(@invoice_item_2.unit_price)
+      expect(page).to have_content(@invoice_item_2.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_2.status)
       expect(page).to have_content(@invoice_item_2.status)
       expect(page).to_not have_content(@item_5.name)
@@ -79,11 +79,11 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
       expect(page).to have_content(@item_2.name)
       expect(page).to have_content(@invoice_item_3.quantity)
-      expect(page).to have_content(@invoice_item_3.unit_price)
+      expect(page).to have_content(@invoice_item_3.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_3.status)
       expect(page).to have_content(@item_4.name)
       expect(page).to have_content(@invoice_item_4.quantity)
-      expect(page).to have_content(@invoice_item_4.unit_price)
+      expect(page).to have_content(@invoice_item_4.unit_price_in_dollars)
       expect(page).to have_content(@invoice_item_4.status)
     end
   end
@@ -110,16 +110,19 @@ RSpec.describe 'Merchant Invoice Show Page' do
   describe 'user story 18' do 
     it 'displays the invoice item status as a select field' do 
       visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
-      save_and_open_page
-      within("#item-#{@item_1.id}") do 
+
+      within("#invoice_item-#{@invoice_item_1.id}") do
         expect(page).to have_field(:status, with: "shipped")
-     
+           
         select "packaged", from: :status
         click_button "Update Item Status"
-      
-        expect(current_path).to eq(merchant_invoice_path(@merchant_1.id, @invoice_1.id))
-        expect(page).to have_field(:status, with: "packaged")  
-      end
+      end      
+
+      expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_1.item_name}")
+      expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_1.quantity}")
+      expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_1.unit_price_in_dollars}")
+      expect(find(:table, "Items")).to have_table_row("Status" => "packaged")
+      expect(current_path).to eq(merchant_invoice_path(@merchant_1.id, @invoice_1.id))
     end
   end
 end

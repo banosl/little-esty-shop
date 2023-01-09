@@ -12,11 +12,11 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue
-    invoice_items.sum('unit_price * quantity')
+    invoice_items.sum('unit_price * quantity')/100.to_f
   end
 
   def revenue_for_invoice_item(merchant)
-#  require 'pry'; binding.pry
+
   end
 
   def total_revenue_in_dollars
