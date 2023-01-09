@@ -259,6 +259,11 @@ RSpec.describe 'Merchant Items Index page' do
 
         within("#popular_items_#{@merchant_1.id}") do
           expect(page).to have_content("Top selling date for #{@item_7.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_5.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_4.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_6.name} was #{date}")
+          expect(page).to have_content("Top selling date for #{@item_2.name} was #{date}")
+          expect(page).to_not have_content("Top selling date for #{@item_1.name} was #{date}")
         end
       end
     end
