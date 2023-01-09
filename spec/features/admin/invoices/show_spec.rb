@@ -33,15 +33,15 @@ RSpec.describe "Admin/Invoices/Show" do
       @invoice_2 = @customer_1.invoices.create!(status: 'in progress', created_at: Time.new(2021))
       @invoice_3 = @customer_2.invoices.create!(status: 'in progress', created_at: Time.new(2022))
 
-      @invoice_4 = @customer_2.invoices.create!(status: 'cancelled')
-      @invoice_5 = @customer_3.invoices.create!(status: 'cancelled')
-      @invoice_6 = @customer_3.invoices.create!(status: 'cancelled')
+      @invoice_4 = @customer_2.invoices.create!(status: 'canceled')
+      @invoice_5 = @customer_3.invoices.create!(status: 'canceled')
+      @invoice_6 = @customer_3.invoices.create!(status: 'canceled')
       @invoice_7 = @customer_4.invoices.create!(status: 'in progress', created_at: Time.new(1995))
-      @invoice_8 = @customer_4.invoices.create!(status: 'cancelled')
-      @invoice_9 = @customer_5.invoices.create!(status: 'cancelled')
-      @invoice_10 = @customer_5.invoices.create!(status: 'cancelled')
-      @invoice_11 = @customer_6.invoices.create!(status: 'cancelled')
-      @invoice_12 = @customer_6.invoices.create!(status: 'cancelled')
+      @invoice_8 = @customer_4.invoices.create!(status: 'canceled')
+      @invoice_9 = @customer_5.invoices.create!(status: 'canceled')
+      @invoice_10 = @customer_5.invoices.create!(status: 'canceled')
+      @invoice_11 = @customer_6.invoices.create!(status: 'canceled')
+      @invoice_12 = @customer_6.invoices.create!(status: 'canceled')
 
       @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
       @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
@@ -108,14 +108,14 @@ RSpec.describe "Admin/Invoices/Show" do
       created at in format 'Monday, July 18, 2019', customer first and last name" do
         visit "/admin/invoices/#{@invoice_1.id}"
 
-        expect(page).to have_content("Status: #{@invoice_1.status}")
+        expect(page).to have_content(@invoice_1.status)
         expect(page).to have_content("Created on: #{@invoice_1.created_at.strftime("%A, %B %d, %Y")}")
         expect(page).to have_content("Invoice ##{@invoice_1.id}")
         expect(page).to have_content("#{@invoice_1.customer.first_name} #{@invoice_1.customer.last_name}")
 
         visit "/admin/invoices/#{@invoice_3.id}"
 
-        expect(page).to have_content("Status: #{@invoice_3.status}")
+        expect(page).to have_content(@invoice_3.status)
         expect(page).to have_content("Created on: #{@invoice_3.created_at.strftime("%A, %B %d, %Y")}")
         expect(page).to have_content("Invoice ##{@invoice_3.id}")
         expect(page).to have_content("#{@invoice_3.customer.full_name}")
@@ -160,6 +160,38 @@ RSpec.describe "Admin/Invoices/Show" do
 
         visit "/admin/invoices/#{@invoice_3.id}"
         expect(page).to have_content("Total Revenue: $#{@invoice_3.total_revenue_in_dollars}")
+      end
+    end
+
+    describe "User Story 36" do
+      it "see invoice status is a select field" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+
+        expect(page).to have_field(:status)
+      end
+
+      it "when user clicks select field, they can select a new status for the Invoice
+      and click the 'Update Invoice Status' button next to it to change the status. 
+      After clicking the button the user is taken back to the admin invoice show page with the status updated" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+        
+        expect(page).to have_field(:status, :with => "completed")
+
+        select "canceled", from: :status
+        click_button "Update Status"
+       
+        expect(current_path).to eq("/admin/invoices/#{@invoice_1.id}")
+        expect(page).to have_field(:status, :with => "canceled")
+
+        visit "/admin/invoices/#{@invoice_5.id}"
+        
+        expect(page).to have_field(:status, :with => "canceled")
+
+        select "in progress", from: :status
+        click_button "Update Status"
+       
+        expect(current_path).to eq("/admin/invoices/#{@invoice_5.id}")
+        expect(page).to have_field(:status, :with => "in progress")
       end
     end
   end
