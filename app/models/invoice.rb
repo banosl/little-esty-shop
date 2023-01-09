@@ -15,10 +15,6 @@ class Invoice < ApplicationRecord
     invoice_items.sum('unit_price * quantity')/100.to_f
   end
 
-  def revenue_for_invoice_item(merchant)
-
-  end
-
   def total_revenue_in_dollars
     total_revenue/100.to_f
   end

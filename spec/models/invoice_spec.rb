@@ -174,23 +174,13 @@ RSpec.describe Invoice, type: :model do
     ## these two blocks may belong to a later user story (maybe 17?)
     ## keeping this here incase we need in future
       describe '#total_revenue' do
-        xit 'returns the total revenue for all invoice items' do
-          expect(@invoice_1.total_revenue).to eq(3000)
-          expect(@invoice_2.total_revenue).to eq(2100)
+        it 'returns the total revenue for all invoice items' do
+          expect(@invoice_1.total_revenue).to eq(30.00)
+          expect(@invoice_2.total_revenue).to eq(21.00)
           # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
           # find all the invoice_1; do (quantity * unit price) and sum those up
         end
       end
-        
-      describe '#revenue_for_invoice_item' do
-        xit 'can return the revenue for an invoice item' do
-          # - Revenue for an invoice item should be calculated as 
-          # the invoice item unit price multiplied by the quantity (do not use the item unit price) 
-          expect(@invoice_1.revenue_for_invoice_item(@merchant_1)).to eq(500)
-          # taking 1 invoice item and (quantity * unit price) to get the revenue for that 1 item
-          # will porbably have to make @invoice_item_1, etc
-        end
-      end 
     end
   end
 end
