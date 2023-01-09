@@ -570,10 +570,14 @@ RSpec.describe "Admin/Merchant/Index" do
       it 'displays the total revenue next to each merchant' do 
         visit admin_merchants_path
         within("#link_to_merchant_#{@merchant_1.id}") do 
-          expect(page).to have_content("$#{"%.2f" % (750.to_f / 100)}")
+          expect(page).to have_content("$7.50")
           save_and_open_page
         end
       end
+    end
+
+    describe 'user story 31' do 
+      
     end
   end
 end
