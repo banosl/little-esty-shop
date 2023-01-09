@@ -172,7 +172,27 @@ RSpec.describe "Admin/Invoices/Show" do
 
       it "when user clicks select field, they can select a new status for the Invoice
       and click the 'Update Invoice Status' button next to it to change the status. 
-      After clicking the button the user is taken back to the admin invoice show page with the status updated"
+      After clicking the button the user is taken back to the admin invoice show page with the status updated" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+        
+        expect(page).to have_field(:status, :with => "completed")
+
+        select "canceled", from: :status
+        click_button "Update Status"
+       
+        expect(current_path).to eq("/admin/invoices/#{@invoice_1.id}")
+        expect(page).to have_field(:status, :with => "canceled")
+
+        visit "/admin/invoices/#{@invoice_5.id}"
+        
+        expect(page).to have_field(:status, :with => "canceled")
+
+        select "in progress", from: :status
+        click_button "Update Status"
+       
+        expect(current_path).to eq("/admin/invoices/#{@invoice_5.id}")
+        expect(page).to have_field(:status, :with => "in progress")
+      end
     end
   end
 end

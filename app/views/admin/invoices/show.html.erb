@@ -21,7 +21,7 @@
 
 <%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
 <%= form.select :status, ["in progress", "completed", "canceled"], selected: @invoice.status %>
-<%= form.submit "Update Invoice" %>
+<%= form.submit "Update Status" %>
 <% end %>
 </section>
 
