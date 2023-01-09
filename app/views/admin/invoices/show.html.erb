@@ -13,10 +13,16 @@
 
 <main>
 <h3 class="invoice-header"><center>Invoice #<%= @invoice.id %><center></h3>
+
 <section class="customer-info">
+
 <section class="status">
-<p>Status: <%= @invoice.status %></p>
-<%= button_to "update invoice" %>
+<p>Status:
+
+<%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
+<%= form.select :status, ["in progress", "completed", "canceled"], selected: @invoice.status %>
+<%= form.submit "Update Invoice" %>
+<% end %>
 </section>
 
 <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
