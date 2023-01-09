@@ -222,11 +222,14 @@ RSpec.describe "Admin/Merchant/Index" do
         @transaction_35 = @invoice_12.transactions.create!(credit_card_number: '4923661117104166', credit_card_expiration_date: '08/22/20', result: 'success')
         @transaction_36 = @invoice_12.transactions.create!(credit_card_number: '4923661117104166', credit_card_expiration_date: '08/22/20', result: 'success')
       end
-      it "click on the name of a merchant from the admin merchants index page, user is taken to the merchant's admin show page (/admin/merchants/merchant_id)
-      user sees the name of that merchant" do
+      it "click on the name of a merchant from the admin merchants index page, user is taken to the merchant's admin show page (/admin/merchants/merchant_id) user sees the name of that merchant" do
         visit "admin/merchants"
+     
+        
+        within("#disabled_merchants") do 
+          click_link "#{@merchant_1.name}"
+        end 
 
-        click_link "#{@merchant_1.name}"
         expect(page).to have_content("#{@merchant_1.name}")
         expect(page).to_not have_content("#{@merchant_2.name}")
         expect(current_path).to eq("/admin/merchants/#{@merchant_1.id}")
@@ -530,6 +533,8 @@ RSpec.describe "Admin/Merchant/Index" do
         @invoice_item_5 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_5.id, quantity: 5, unit_price: 300, status: 'packaged')
         @invoice_item_6 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_6.id, quantity: 5, unit_price: 40, status: 'packaged')
         @invoice_item_7 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_7.id, quantity: 5, unit_price: 999, status: 'packaged')
+
+        @invoice_item_8 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_1.id, quantity: 5, unit_price: 100, status: 'packaged')
   
         @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
         @transaction_2 = @invoice_2.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
@@ -541,8 +546,7 @@ RSpec.describe "Admin/Merchant/Index" do
       end
 
       it 'displays top 5 merchants based on total revenue generated' do 
-        
-
+      
         visit admin_merchants_path
         within('#top_merchants') do 
           expect(page).to have_content('Top Merchants')
@@ -550,6 +554,24 @@ RSpec.describe "Admin/Merchant/Index" do
           expect(@merchant_2.name).to appear_before(@merchant_4.name)
           expect(@merchant_4.name).to appear_before(@merchant_1.name)
           expect(@merchant_1.name).to appear_before(@merchant_3.name)
+        end
+      end
+
+      it 'displays top 5 merchants as links to their respective pages' do 
+        visit admin_merchants_path
+        within('#top_merchants') do 
+          expect(page).to have_link(@merchant_5.name)
+          click_link(@merchant_5.name)
+          expect(current_path).to eq("/admin/merchants/#{@merchant_5.id}")
+        end
+      end
+
+
+      it 'displays the total revenue next to each merchant' do 
+        visit admin_merchants_path
+        within("#link_to_merchant_#{@merchant_1.id}") do 
+          expect(page).to have_content("$#{"%.2f" % (750.to_f / 100)}")
+          save_and_open_page
         end
       end
     end

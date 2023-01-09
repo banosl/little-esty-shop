@@ -300,6 +300,8 @@ RSpec.describe Merchant, type: :model do
       @merchant_4 = Merchant.create!(name: 'Merchant 4', status: :disabled)
       @merchant_5 = Merchant.create!(name: 'Merchant 5', status: :enabled)
       @merchant_6 = Merchant.create!(name: 'Merchant 6', status: :disabled)
+
+      @merchant_7 = Merchant.create!(name: 'Merchant 7', status: :enabled)
         
       @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
       @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
@@ -314,6 +316,8 @@ RSpec.describe Merchant, type: :model do
       @item_10 = @merchant_4.items.create!(name: 'merchant 4 item', description: 'asdf', unit_price: 40000)
       @item_11 = @merchant_5.items.create!(name: 'merchant 5 item', description: 'asdf', unit_price: 50000)
       @item_12 = @merchant_6.items.create!(name: 'merchant 6 item', description: 'asdf', unit_price: 60000)
+
+      @item_13 = @merchant_7.items.create!(name: 'merchant 7 item', description: 'asdf', unit_price: 150)
 
       # @item_8 = @merchant_1.items.create!(name: 'Est Consequuntur', description: 'Reprehenderit est officiis cupiditate quia eos', unit_price: 34355)
       # @item_9 = @merchant_1.items.create!(name: 'Quo Magnam', description: 'Culpa deleniti adipisci voluptates aut. Sed eum quisquam nisi', unit_price: 22582)
@@ -337,6 +341,8 @@ RSpec.describe Merchant, type: :model do
       @invoice_12 = @customer_1.invoices.create!(status: 'completed')
       @invoice_13 = @customer_1.invoices.create!(status: 'completed')
       
+      @invoice_14 = @customer_1.invoices.create!(status: 'completed')
+
       # @invoice_11 = @customer_2.invoices.create!(status: 'in progress')
       # @invoice_12 = @customer_2.invoices.create!(status: 'completed')
       # @invoice_13 = @customer_2.invoices.create!(status: 'completed')
@@ -370,6 +376,8 @@ RSpec.describe Merchant, type: :model do
       @invoice_item_19 = InvoiceItem.create!(invoice_id: @invoice_13.id, item_id: @item_10.id, quantity: 1, unit_price: 1000, status: 'shipped')
       @invoice_item_19 = InvoiceItem.create!(invoice_id: @invoice_12.id, item_id: @item_11.id, quantity: 1, unit_price: 1000, status: 'shipped')
       @invoice_item_19 = InvoiceItem.create!(invoice_id: @invoice_13.id, item_id: @item_12.id, quantity: 1, unit_price: 1000, status: 'shipped')
+
+      @invoice_item_20 = InvoiceItem.create!(invoice_id: @invoice_14.id, item_id: @item_13.id, quantity: 3, unit_price: 150, status: 'shipped')
       
       @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
       @transaction_2 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
@@ -394,6 +402,8 @@ RSpec.describe Merchant, type: :model do
       @transaction_14 = @invoice_12.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
       @transaction_15 = @invoice_13.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
 
+      @transaction_16 = @invoice_14.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
+
       # @transaction_13 = @invoice_11.transactions.create!(credit_card_number: '9856503416578382', credit_card_expiration_date: '08/25/20', result: 'failed')
       # @transaction_14 = @invoice_11.transactions.create!(credit_card_number: '9856503416578382', credit_card_expiration_date: '08/25/20', result: 'failed')
 
@@ -411,6 +421,12 @@ RSpec.describe Merchant, type: :model do
     # describe '#find_merchants_with_successful_transaction' do 
     #   it 'returns whether or not a merchant has had at least one successful transaction' do
     #     expect(@merchant_1.has_invoice_with_succesful_transaction?).to eq(true)
+    #   end
+    # end
+
+    # describe '#total_revenue' do 
+    #   it 'returns the total revenue of a merchant' do 
+    #     expect(@merchant_1.total_revenue).to eq(450)
     #   end
     # end
 

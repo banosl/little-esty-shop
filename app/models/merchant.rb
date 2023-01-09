@@ -17,6 +17,10 @@ class Merchant < ApplicationRecord
   #   binding.pry
   # end
 
+  # def total_revenue
+  #   binding.pry
+  # end
+
   def unshipped_items 
     items.select(
           'items.*,

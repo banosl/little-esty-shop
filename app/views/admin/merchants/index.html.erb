@@ -11,7 +11,9 @@
 <h3>Top Merchants</h3>
 <ol>
   <% @top_5_merchants.each do |merchant| %>
-    <li><%="#{merchant.name}"%></li>
+    <div id=<%="link_to_merchant_#{merchant.id}"%>>
+      <li id: <%="link_to_merchant_#{merchant.id}"%>><%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %> | Total Revenue: <%="$#{"%.2f" % (merchant.revenue.to_f / 100)}"%></li>
+    </div>
   <% end %>
 </ol>
 </section>
