@@ -1,1 +1,8 @@
-<h1>Invoice Index Page</h1>
+<h1><center>Little Esty Shop<center></h1>
+
+<h2>Invoice Index Page</h2>
+
+<h3>All Invoices</h3>
+<% @merchant.invoices.each do |invoice| %>
+  <%= link_to "Invoice ##{invoice.id}", "/merchants/invoices/#{invoice.id}" %><br>
+<% end %>
