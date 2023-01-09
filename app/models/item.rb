@@ -9,5 +9,14 @@ class Item < ApplicationRecord
 
   validates_presence_of :name, :description, :unit_price
 
-
+  def top_item_selling_date
+    invoices
+      .joins(:transactions)
+      .where(transactions: {result: 'success'})
+      .select('invoices.created_at, count(invoice_items.quantity) as invoice_item_count')
+      .group(:id)
+      .order('invoice_item_count desc')
+      .first
+      .created_at
+  end
 end
