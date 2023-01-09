@@ -7,6 +7,15 @@
   <strong>Invoice Id: </strong><%= @invoice.id %><br>
   <strong>Invoice Status: </strong><%= @invoice.status %><br>
   <strong>Invoice Creation Date: </strong><%= @invoice.created_at.strftime("%A, %B %d, %Y") %><br>
-  <strong>Customer Name: </strong><%= @invoice.customer.full_name %>
-  <strong>Invoice Items: </strong><%=  %>
+  <strong>Customer Name: </strong><%= @invoice.customer.full_name %><br>
+  <strong>Invoice Items: </strong><br>
+    <% @invoice.items.each do |item| %>
+      <%= item.name %><br>
+      <%  item.invoice_items.each do |invoice_item| %>
+        <%= invoice_item.quantity %><br>
+        <%= invoice_item.unit_price %><br>
+        <%= invoice_item.status %><br>
+        ---------------------------<br>
+      <% end %>
+    <% end %>
   </p> 
