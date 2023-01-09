@@ -59,7 +59,7 @@ RSpec.describe Invoice, type: :model do
 
       InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
       InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
-  
+
       InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_2.id, quantity: 12, unit_price: 34873, status: 'packaged')
       InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_4.id, quantity: 8, unit_price: 2196, status: 'pending')
       InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_5.id, quantity: 3, unit_price: 79140, status: 'packaged')
@@ -119,6 +119,15 @@ RSpec.describe Invoice, type: :model do
     
     it 'incomplete_invoices' do 
       expect(Invoice.incomplete_invoices).to match([@invoice_2, @invoice_3])
+    end 
+
+    it 'revenue' do 
+      expect(@invoice_1.total_revenue).to eq(278091)
+    end
+
+    it 'contains_successful_transaction?' do 
+      expect(@invoice_1.contains_successful_transaction?).to eq(true)
+      expect(@invoice_2.contains_successful_transaction?).to eq(false)
     end
 
     it 'price_in_dollars' do

@@ -124,6 +124,7 @@ RSpec.describe "Admin/Merchant/show" do
 
       it 'updates the merchants name upon submission' do 
         visit "/admin/merchants/#{@merchant_1.id}/edit"
+        save_and_open_page
         expect(page).to have_field("name", with: @merchant_1.name)
         fill_in "name", with: "Jeff"
         click_button "Edit Merchant"

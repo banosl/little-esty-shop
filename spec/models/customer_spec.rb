@@ -239,6 +239,6 @@ RSpec.describe Customer, type: :model do
 
     it 'top_5_customers_by_successful_transactions' do
       expect(Customer.top_5_customers_by_successful_transactions).to match([@customer_6, @customer_2, @customer_3, @customer_5, @customer_1])
-    end
+    end 
   end
 end
