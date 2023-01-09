@@ -302,6 +302,9 @@ RSpec.describe Merchant, type: :model do
       @merchant_6 = Merchant.create!(name: 'Merchant 6', status: :disabled)
 
       @merchant_7 = Merchant.create!(name: 'Merchant 7', status: :enabled)
+
+      @merchant_8 = Merchant.create!(name: 'Merchant 8', status: :enabled)
+
         
       @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
       @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
@@ -319,6 +322,7 @@ RSpec.describe Merchant, type: :model do
 
       @item_13 = @merchant_7.items.create!(name: 'merchant 7 item', description: 'asdf', unit_price: 150)
 
+      @item_14 = @merchant_8.items.create!(name: 'merchant 8 item', description: 'asdf', unit_price: 1)
       # @item_8 = @merchant_1.items.create!(name: 'Est Consequuntur', description: 'Reprehenderit est officiis cupiditate quia eos', unit_price: 34355)
       # @item_9 = @merchant_1.items.create!(name: 'Quo Magnam', description: 'Culpa deleniti adipisci voluptates aut. Sed eum quisquam nisi', unit_price: 22582)
       # @item_10 = @merchant_1.items.create!(name: 'Quidem Suscipit', description: 'Reiciendis sed aperiam culpa animi laudantium', unit_price: 34018)
@@ -343,6 +347,7 @@ RSpec.describe Merchant, type: :model do
       
       @invoice_14 = @customer_1.invoices.create!(status: 'completed')
 
+      @invoice_15 = @customer_1.invoices.create!(status: 'completed')
       # @invoice_11 = @customer_2.invoices.create!(status: 'in progress')
       # @invoice_12 = @customer_2.invoices.create!(status: 'completed')
       # @invoice_13 = @customer_2.invoices.create!(status: 'completed')
@@ -379,6 +384,10 @@ RSpec.describe Merchant, type: :model do
 
       @invoice_item_20 = InvoiceItem.create!(invoice_id: @invoice_14.id, item_id: @item_13.id, quantity: 3, unit_price: 150, status: 'shipped')
       
+      @invoice_item_21 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 10, unit_price: 1, status: 'shipped')
+      @invoice_item_22 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 5, unit_price: 1, status: 'shipped')
+
+
       @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
       @transaction_2 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
       
@@ -436,5 +445,15 @@ RSpec.describe Merchant, type: :model do
       end
     end
 
+    describe '#top_selling_date' do 
+      it 'returns the date with the most sales' do 
+        expect(@merchant_8.top_selling_date).to eq(@invoice_item_21.created_at)
+
+      #   @invoice_item_22 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 15, unit_price: 1, status: 'shipped')
+      #   @invoice_item_23 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 1, unit_price: 1, status: 'shipped')
+
+      #   expect(@merchant_8.top_selling_date).to eq(@invoice_22.created_at)
+      end
+    end
   end
 end

@@ -11,9 +11,12 @@
 <h3>Top 5 Merchants</h3>
 <ol>
   <% @top_5_merchants.each do |merchant| %>
-    <div id=<%="link_to_merchant_#{merchant.id}"%>>
-      <li id: <%="link_to_merchant_#{merchant.id}"%>><%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %> | Total Revenue: <%="$#{"%.2f" % (merchant.revenue.to_f / 100)}"%></li>
-    </div>
+    <li>
+      <div id=<%="link_to_merchant_#{merchant.id}"%>>
+        <%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %> | Total Revenue: <%="$#{"%.2f" % (merchant.revenue.to_f / 100)}"%><br><br>
+        <label> &#8195;Top selling date for <%=merchant.name%> was <%=merchant.top_selling_date%></label><br><br>
+      </div>
+    </li>
   <% end %>
 </ol>
 </section>
