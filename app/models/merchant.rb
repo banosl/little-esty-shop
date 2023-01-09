@@ -52,11 +52,11 @@ class Merchant < ApplicationRecord
   end
 
   def top_selling_date 
-    invoice_items
-      .select('invoice_items.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
+    invoices
+      .select('invoices.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
       .group(:id)
-      .order(revenue: :desc)
-      .first
+      .order(revenue: :desc, created_at: :desc)
+      .first 
       .created_at
   end
 end

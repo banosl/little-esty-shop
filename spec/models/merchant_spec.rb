@@ -348,6 +348,9 @@ RSpec.describe Merchant, type: :model do
       @invoice_14 = @customer_1.invoices.create!(status: 'completed')
 
       @invoice_15 = @customer_1.invoices.create!(status: 'completed')
+      @invoice_16 = @customer_1.invoices.create!(status: 'completed')
+      @invoice_17 = @customer_1.invoices.create!(status: 'completed')
+
       # @invoice_11 = @customer_2.invoices.create!(status: 'in progress')
       # @invoice_12 = @customer_2.invoices.create!(status: 'completed')
       # @invoice_13 = @customer_2.invoices.create!(status: 'completed')
@@ -381,11 +384,11 @@ RSpec.describe Merchant, type: :model do
       @invoice_item_19 = InvoiceItem.create!(invoice_id: @invoice_13.id, item_id: @item_10.id, quantity: 1, unit_price: 1000, status: 'shipped')
       @invoice_item_19 = InvoiceItem.create!(invoice_id: @invoice_12.id, item_id: @item_11.id, quantity: 1, unit_price: 1000, status: 'shipped')
       @invoice_item_19 = InvoiceItem.create!(invoice_id: @invoice_13.id, item_id: @item_12.id, quantity: 1, unit_price: 1000, status: 'shipped')
-
       @invoice_item_20 = InvoiceItem.create!(invoice_id: @invoice_14.id, item_id: @item_13.id, quantity: 3, unit_price: 150, status: 'shipped')
       
       @invoice_item_21 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 10, unit_price: 1, status: 'shipped')
-      @invoice_item_22 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 5, unit_price: 1, status: 'shipped')
+      @invoice_item_22 = InvoiceItem.create!(invoice_id: @invoice_16.id, item_id: @item_14.id, quantity: 5, unit_price: 1, status: 'shipped')
+      @invoice_item_23 = InvoiceItem.create!(invoice_id: @invoice_17.id, item_id: @item_14.id, quantity: 10, unit_price: 1, status: 'shipped')
 
 
       @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
@@ -414,6 +417,8 @@ RSpec.describe Merchant, type: :model do
       @transaction_16 = @invoice_14.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
 
       @transaction_17 = @invoice_15.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
+      @transaction_18 = @invoice_16.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
+
       # @transaction_13 = @invoice_11.transactions.create!(credit_card_number: '9856503416578382', credit_card_expiration_date: '08/25/20', result: 'failed')
       # @transaction_14 = @invoice_11.transactions.create!(credit_card_number: '9856503416578382', credit_card_expiration_date: '08/25/20', result: 'failed')
 
@@ -448,12 +453,16 @@ RSpec.describe Merchant, type: :model do
 
     describe '#top_selling_date' do 
       it 'returns the date with the most sales' do 
-        expect(@merchant_8.top_selling_date).to eq(@invoice_item_21.created_at)
+        expect(@merchant_8.top_selling_date).to eq(@invoice_17.created_at)
 
-        @invoice_item_22 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 15, unit_price: 1, status: 'shipped')
-        @invoice_item_23 = InvoiceItem.create!(invoice_id: @invoice_15.id, item_id: @item_14.id, quantity: 1, unit_price: 1, status: 'shipped')
+        @invoice_item_23 = InvoiceItem.create!(invoice_id: @invoice_16.id, item_id: @item_14.id, quantity: 15, unit_price: 1, status: 'shipped')
+        @invoice_item_24 = InvoiceItem.create!(invoice_id: @invoice_17.id, item_id: @item_14.id, quantity: 1, unit_price: 1, status: 'shipped')
+        
+        expect(@merchant_8.top_selling_date).to eq(@invoice_16.created_at)
+        
+        @invoice_item_25 = InvoiceItem.create!(invoice_id: @invoice_17.id, item_id: @item_14.id, quantity: 100, unit_price: 1, status: 'shipped')
 
-        expect(@merchant_8.top_selling_date).to eq(@invoice_item_22.created_at)
+        expect(@merchant_8.top_selling_date).to eq(@invoice_17.created_at)
       end
     end
   end
