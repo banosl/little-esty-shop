@@ -549,11 +549,11 @@ RSpec.describe "Admin/Merchant/Index" do
       
         visit admin_merchants_path
         within('#top_merchants') do 
-          expect(page).to have_content('Top Merchants')
-          expect(@merchant_5.name).to appear_before(@merchant_2.name)
+          expect(page).to have_content('Top 5 Merchants')
+          expect(@merchant_5.name).to appear_before(@merchant_1.name)
+          expect(@merchant_1.name).to appear_before(@merchant_2.name)
           expect(@merchant_2.name).to appear_before(@merchant_4.name)
-          expect(@merchant_4.name).to appear_before(@merchant_1.name)
-          expect(@merchant_1.name).to appear_before(@merchant_3.name)
+          expect(@merchant_4.name).to appear_before(@merchant_3.name)
         end
       end
 
@@ -571,13 +571,67 @@ RSpec.describe "Admin/Merchant/Index" do
         visit admin_merchants_path
         within("#link_to_merchant_#{@merchant_1.id}") do 
           expect(page).to have_content("$7.50")
-          save_and_open_page
         end
       end
     end
 
     describe 'user story 31' do 
-      
+      before :each do 
+        @merchant_1 = Merchant.create!(name: 'Merchant 1')
+        @merchant_2 = Merchant.create!(name: 'Merchant 2', status: :enabled)
+        @merchant_3 = Merchant.create!(name: 'Merchant 3', status: :disabled)
+        @merchant_4 = Merchant.create!(name: 'Merchant 4', status: :disabled)
+        @merchant_5 = Merchant.create!(name: 'Merchant 5', status: :enabled)
+        @merchant_6 = Merchant.create!(name: 'Merchant 6', status: :disabled)
+        @merchant_7 = Merchant.create!(name: 'Merchant 6', status: :disabled)
+          
+        @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
+        @item_2 = @merchant_2.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
+        @item_3 = @merchant_3.items.create!(name: 'Ea Voluptatum', description: 'Sunt officia eum qui molestiae', unit_price: 32301)
+        @item_4 = @merchant_4.items.create!(name: 'Nemo Facere', description: 'Sunt eum id eius magni consequuntur delectus veritatis', unit_price: 4291)
+        @item_5 = @merchant_5.items.create!(name: 'Expedita Aliquam', description: 'Voluptate aut labore qui illum tempore eius. Corrupti cum et rerum', unit_price: 68723)
+        @item_6 = @merchant_6.items.create!(name: 'Provident At', description: 'Numquam officiis reprehenderit eum ratione neque tenetur', unit_price: 15925)
+        @item_7 = @merchant_7.items.create!(name: 'Provident At', description: 'Numquam officiis reprehenderit eum ratione neque tenetur', unit_price: 15925)
+  
+        # @item_8 = @merchant_1.items.create!(name: 'Est Consequuntur', description: 'Reprehenderit est officiis cupiditate quia eos', unit_price: 34355)
+        # @item_9 = @merchant_1.items.create!(name: 'Quo Magnam', description: 'Culpa deleniti adipisci voluptates aut. Sed eum quisquam nisi', unit_price: 22582)
+        # @item_10 = @merchant_1.items.create!(name: 'Quidem Suscipit', description: 'Reiciendis sed aperiam culpa animi laudantium', unit_price: 34018)
+  
+        @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Ondricka')
+  
+        @invoice_1 = @customer_1.invoices.create!(status: 'completed')
+        @invoice_2 = @customer_1.invoices.create!(status: 'completed')
+        @invoice_3 = @customer_1.invoices.create!(status: 'completed')
+        @invoice_4 = @customer_1.invoices.create!(status: 'completed')
+        @invoice_5 = @customer_1.invoices.create!(status: 'completed')
+        @invoice_6 = @customer_1.invoices.create!(status: 'completed')
+        @invoice_7 = @customer_1.invoices.create!(status: 'completed')
+  
+        @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 5, unit_price: 50, status: 'packaged')
+        @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 5, unit_price: 100, status: 'packaged')
+        @invoice_item_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_3.id, quantity: 5, unit_price: 42, status: 'packaged')
+        @invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_4.id, quantity: 5, unit_price: 66, status: 'packaged')
+        @invoice_item_5 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_5.id, quantity: 5, unit_price: 300, status: 'packaged')
+        @invoice_item_6 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_6.id, quantity: 5, unit_price: 40, status: 'packaged')
+        @invoice_item_7 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_7.id, quantity: 5, unit_price: 999, status: 'packaged')
+
+        @invoice_item_8 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_1.id, quantity: 5, unit_price: 100, status: 'packaged')
+  
+        @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
+        @transaction_2 = @invoice_2.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
+        @transaction_3 = @invoice_3.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
+        @transaction_4 = @invoice_4.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
+        @transaction_5 = @invoice_5.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
+        @transaction_6 = @invoice_6.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
+        @transaction_7 = @invoice_7.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
+      end
+
+      it 'lists the date with the most revenue next to the top 5 merchants' do 
+        visit admin_merchants_path 
+        within("#link_to_merchant_#{@merchant_1.id}") do 
+          expect(page).to have_content("Top selling date for #{@merchant_1.name} was ")
+        end
+      end
     end
   end
 end
