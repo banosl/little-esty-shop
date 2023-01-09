@@ -10,13 +10,19 @@
   <strong>Customer Name: </strong><%= @invoice.customer.full_name %><br>
   <strong>Invoice Items: </strong><br>
     <% @invoice.items.each do |item| %>
+    <div id="item-<%= item.id %>">
       <%= item.name %><br>
       <%  item.invoice_items.each do |invoice_item| %>
         <%= invoice_item.quantity %><br>
         <%= invoice_item.unit_price %><br>
-        <%= invoice_item.status %><br>
+        <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true do |f| %>
+          <%= f.select :status, ["pending", "packaged", "shipped"], selected: invoice_item.status %>
+          <%= f.hidden_field :invoice_item_id, value: invoice_item.id %>
+          <%= f.submit "Update Item Status" %>
+        <% end %>
         ---------------------------<br>
       <% end %>
+      </div>
     <% end %>
   </p> 
 
