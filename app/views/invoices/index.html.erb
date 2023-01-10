@@ -14,5 +14,5 @@
 
 <h3 class="invoice-header">My Invoices</h3>
 <% @merchant.invoices.each do |invoice| %>
-  <%= link_to "Invoice ##{invoice.id}", "/merchants/invoices/#{invoice.id}" %><br>
+  <p><font size="-1"><%= link_to "Invoice ##{invoice.id}", "/merchants/invoices/#{invoice.id}" %><br><p></font>
 <% end %>
