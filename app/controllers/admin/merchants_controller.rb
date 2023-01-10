@@ -20,14 +20,12 @@ module Admin
       if params[:status].present? && 
         current_merchant.update(merchant_params)
 
-        # not sure the .save is required here 
         current_merchant.save 
 
         redirect_back fallback_location: "admin/merchants#{current_merchant.name}"
       else 
         current_merchant.update(merchant_params)
 
-        # not sure the .save is required here
         current_merchant.save
 
         redirect_to "/admin/merchants/#{current_merchant.id}"
@@ -46,6 +44,7 @@ module Admin
     end
 
 private 
+
     def merchant_params
       params.require(:merchant).permit(:status, :name)
     end

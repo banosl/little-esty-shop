@@ -42,7 +42,6 @@ RSpec.describe "Admin Dashboard(Index)" do
     @invoice_11 = @customer_6.invoices.create!(status: 'cancelled')
     @invoice_12 = @customer_6.invoices.create!(status: 'cancelled')
 
-    #do i have to calculate the actual unit_price?
     InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
     InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
 

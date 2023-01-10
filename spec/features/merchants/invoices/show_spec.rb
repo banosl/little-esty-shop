@@ -26,13 +26,6 @@ RSpec.describe 'Merchant Invoice Show Page' do
     @invoice_item_5 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_5.id, quantity: 1, unit_price: 23784, status: 'shipped')
   end
   describe 'user story 15' do 
-    # As a merchant
-    # When I visit my merchant's invoice show page(/merchants/merchant_id/invoices/invoice_id)
-    # Then I see information related to that invoice including:
-    # - Invoice id
-    # - Invoice status
-    # - Invoice created_at date in the format "Monday, July 18, 2019"
-    # - Customer first and last name
     it 'displays invoice attributes (id, status, created_at, customer name' do 
       visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
 

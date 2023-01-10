@@ -40,7 +40,6 @@ class ItemsController < ApplicationController
     item = merchant.items.new(item_params)
     if item.save(item_params)
       redirect_to "/merchants/#{merchant.id}/items"
-      # flash[:alert] = 'New item has been successfully created'
     else
       redirect_to new_merchant_item_path(merchant.id)
       flash[:alert] = 'Item was not created, please fill out all of the fields.'
