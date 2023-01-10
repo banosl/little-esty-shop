@@ -22,7 +22,6 @@ RSpec.describe '/Admin/Merchant/New' do
       it 'creates a new merchant upon clicking Submit' do 
         visit new_admin_merchant_path 
         fill_in 'Name', with: 'New Jeff'  
-        save_and_open_page
         click_on 'Submit' 
         expect(current_path).to eq(admin_merchants_path) 
         within('#disabled_merchants') do 

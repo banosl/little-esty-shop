@@ -20,7 +20,7 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue
-    invoice_items.sum('unit_price * quantity')/100.to_f
+    invoice_items.sum('unit_price * quantity')
   end
 
   def total_revenue_in_dollars

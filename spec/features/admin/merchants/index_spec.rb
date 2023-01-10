@@ -629,7 +629,6 @@ RSpec.describe "Admin/Merchant/Index" do
       it 'lists the date with the most revenue next to the top 5 merchants' do 
         visit admin_merchants_path 
         within("#link_to_merchant_#{@merchant_1.id}") do 
-          save_and_open_page
           #expect(page).to have_content("Top selling date for #{@merchant_1.name} was ")
         end
       end
