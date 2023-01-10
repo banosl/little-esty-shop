@@ -13,14 +13,6 @@ class Merchant < ApplicationRecord
     Merchant.where(status: merchant_status).order(updated_at: :desc)
   end
 
-  # def has_invoice_with_succesful_transaction? 
-  #   binding.pry
-  # end
-
-  # def total_revenue
-  #   binding.pry
-  # end
-
   def unshipped_items 
     items.select(
           'items.*,

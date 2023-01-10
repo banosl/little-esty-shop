@@ -69,11 +69,7 @@ RSpec.describe 'Merchant Items Index page' do
     
     @transaction_12 = @invoice_10.transactions.create!(credit_card_number: '4017503416578382', credit_card_expiration_date: '08/22/20', result: 'success')
   end
-  
-#  As a merchant,
-# When I visit my merchant items index page ("merchants/merchant_id/items")
-# I see a list of the names of all of my items
-# And I do not see items for any other merchant
+
   describe 'User story 6' do
     it 'displays a list of all merchant items for that particular merchant' do
       visit merchant_items_path(@merchant_1.id)
@@ -87,17 +83,7 @@ RSpec.describe 'Merchant Items Index page' do
         expect(page).to_not have_content(@item_10.name)
     end
   end
-  
-  # Part 1:
-  # As a merchant,
-  # When I click on the name of an item from the merchant items index page,
-  # Then I am taken to that merchant's item's show page (/merchants/merchant_id/items/item_id)
 
-  # Part 2: And I see all of the item's attributes including:
-  
-  # - Name
-  # - Description
-  # - Current Selling Price
   describe 'User story 7 (part 1)' do
     it 'displays the item name as a link which links to the items show page' do
       visit merchant_items_path(@merchant_1.id)
@@ -112,12 +98,6 @@ RSpec.describe 'Merchant Items Index page' do
     end
   end
     
-# As a merchant
-# When I visit my items index page ("merchants/merchant_id/items")
-# Next to each item name I see a button to disable or enable that item.
-# When I click this button
-# Then I am redirected back to the items index
-# And I see that the items status has changed
   describe 'User story 9' do
     it 'next to each name, I see a button to enable or disable that item' do
       visit merchant_items_path(@merchant_1.id)
@@ -143,14 +123,9 @@ RSpec.describe 'Merchant Items Index page' do
     end
   end
 
-# As a merchant,
-# When I visit my merchant items index page
-# Then I see two sections, one for "Enabled Items" and one for "Disabled Items"
-# And I see that each Item is listed in the appropriate section
   describe 'User story 10' do
     it 'has two sections for enabled and disabled items' do
       visit merchant_items_path(@merchant_1.id)
-      # visit "merchants/#{@merchant_1.id}/items"
 
       within("#enabled_item_#{@item_1.id}") do
         expect(page).to have_button('Disable')
@@ -171,16 +146,6 @@ RSpec.describe 'Merchant Items Index page' do
     end 
   end
 
-
-  # As a merchant
-  # When I visit my items index page
-  # I see a link to create a new item.
-  # When I click on the link,
-  # I am taken to a form that allows me to add item information.
-  # When I fill out the form I click ‘Submit’
-  # Then I am taken back to the items index page
-  # And I see the item I just created displayed in the list of items.
-  # And I see my item was created with a default status of disabled.
   describe 'user story 11' do 
     it 'displays a link to create a new item' do
       visit merchant_items_path(@merchant_1.id)
@@ -212,12 +177,6 @@ RSpec.describe 'Merchant Items Index page' do
     end
   end
 
-# As a merchant
-# When I visit my items index page
-# Then I see the names of the top 5 most popular items ranked by total revenue generated
-# And I see that each item name links to my merchant item show page for that item
-# And I see the total revenue generated next to each item name
-
   describe 'User story 12' do
     it 'displays the names of the top 5 most popular items (ranked by total revenue) as a link to merchant item show page' do
       visit merchant_items_path(@merchant_1.id)
@@ -244,12 +203,6 @@ RSpec.describe 'Merchant Items Index page' do
         expect(page).to have_content(@merchant_1.top_5_items_by_revenue[4].revenue)
       end
     end
-
-# As a merchant
-# When I visit my items index page
-# Then next to each of the 5 most popular items I see the date with the most sales for each item.
-# And I see a label “Top selling date for <item name> was <date with most sales>"
-# Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
 
     describe 'User story 13' do
       it 'I see the date with the most sales for each item' do

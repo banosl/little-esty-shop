@@ -18,16 +18,6 @@ RSpec.describe 'Merchant Items Show page' do
     @item_10 = @merchant_2.items.create!(name: 'Quidem Suscipit', description: 'Reiciendis sed aperiam culpa animi laudantium', unit_price: 34018)
   end
 
-  # Part 1:
-  # As a merchant,
-  # When I click on the name of an item from the merchant items index page,
-  # Then I am taken to that merchant's item's show page (/merchants/merchant_id/items/item_id)
-
-  # Part 2: And I see all of the item's attributes including:
-  
-  # - Name
-  # - Description
-  # - Current Selling Price
   describe 'User story 7 (part 2)' do
     it 'displays all the items name, description, current selling price' do
       visit merchant_item_path(@merchant_1.id, @item_1.id)
