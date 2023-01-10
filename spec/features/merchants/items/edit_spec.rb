@@ -32,15 +32,15 @@ RSpec.describe 'Merchant Items Edit page' do
     it 'has a link to update the item information' do
       visit merchant_item_path(@merchant_1.id, @item_1.id)
 
-      expect(page).to have_link("Edit information for: #{@item_1.name}", :href => "/merchants/#{@merchant_1.id}/items/#{@item_1.id}/edit")
+      expect(page).to have_link("Update information for: #{@item_1.name}", :href => "/merchants/#{@merchant_1.id}/items/#{@item_1.id}/edit")
     end
 
     it 'takes me to a page with a form that is filled with the item attributes, when I click the link' do
       visit merchant_item_path(@merchant_1.id, @item_1.id)
 
-      expect(page).to have_link("Edit information for: #{@item_1.name}", :href => "/merchants/#{@merchant_1.id}/items/#{@item_1.id}/edit")
+      expect(page).to have_link("Update information for: #{@item_1.name}", :href => "/merchants/#{@merchant_1.id}/items/#{@item_1.id}/edit")
 
-      click_link("Edit information for: #{@item_1.name}") 
+      click_link("Update information for: #{@item_1.name}") 
 
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/items/#{@item_1.id}/edit")
       expect(page).to have_field('Name', with: "#{@item_1.name}")

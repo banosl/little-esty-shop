@@ -91,7 +91,8 @@ RSpec.describe Item, type: :model do
 # Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
   describe '#top_item_selling_date' do
     it 'returns the date that an item sold the most in quantity' do
-      expect(@item_7.top_item_selling_date.strftime('%d/%m/%y')).to eq(@invoice_6.created_at.strftime('%d/%m/%y'))
+      # require 'pry'; binding.pry
+      expect(@item_7.top_item_selling_date.strftime('%m/%d/%y')).to eq(@invoice_6.created_at.strftime('%m/%d/%y'))
     end
   end
 end
