@@ -200,7 +200,7 @@ RSpec.describe "Admin Dashboard(Index)" do
     describe 'API user story 1' do
       it 'shows the github repo name' do
         visit '/admin'
-        save_and_open_page
+        
         expect(page).to have_content("GitHub Repository: little-esty-shop")
       end
     end
