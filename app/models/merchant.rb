@@ -1,3 +1,4 @@
+
 class Merchant < ApplicationRecord
 
   enum status: { disabled: 0, enabled: 1 }
@@ -11,6 +12,14 @@ class Merchant < ApplicationRecord
   def self.find_by_status(merchant_status) 
     Merchant.where(status: merchant_status).order(updated_at: :desc)
   end
+
+  # def has_invoice_with_succesful_transaction? 
+  #   binding.pry
+  # end
+
+  # def total_revenue
+  #   binding.pry
+  # end
 
   def unshipped_items 
     items.select(
@@ -33,5 +42,21 @@ class Merchant < ApplicationRecord
       .limit(5)
   end
 
-  
+  def self.top_5_merchants_by_revenue 
+    joins(:invoices, :transactions)
+    .where(transactions: {result: "success"})
+    .select("merchants.*, merchants.name as merchant_name, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
+    .group(:id)
+    .order(revenue: :desc)
+    .limit(5).to_a
+  end
+
+  def top_selling_date 
+    invoices
+      .select('invoices.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
+      .group(:id)
+      .order(revenue: :desc, created_at: :desc)
+      .first 
+      .created_at
+  end
 end

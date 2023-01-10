@@ -108,14 +108,14 @@ RSpec.describe "Admin/Invoices/Show" do
       created at in format 'Monday, July 18, 2019', customer first and last name" do
         visit "/admin/invoices/#{@invoice_1.id}"
 
-        expect(page).to have_content("Status: #{@invoice_1.status}")
+        expect(page).to have_content(@invoice_1.status)
         expect(page).to have_content("Created on: #{@invoice_1.created_at.strftime("%A, %B %d, %Y")}")
         expect(page).to have_content("Invoice ##{@invoice_1.id}")
         expect(page).to have_content("#{@invoice_1.customer.first_name} #{@invoice_1.customer.last_name}")
 
         visit "/admin/invoices/#{@invoice_3.id}"
 
-        expect(page).to have_content("Status: #{@invoice_3.status}")
+        expect(page).to have_content(@invoice_3.status)
         expect(page).to have_content("Created on: #{@invoice_3.created_at.strftime("%A, %B %d, %Y")}")
         expect(page).to have_content("Invoice ##{@invoice_3.id}")
         expect(page).to have_content("#{@invoice_3.customer.full_name}")
@@ -128,38 +128,70 @@ RSpec.describe "Admin/Invoices/Show" do
         visit "/admin/invoices/#{@invoice_1.id}"
 
         within ("#Items_Invoice") do
-          expect(page).to have_content("Item Name")
-          expect(page).to have_content("Quantity")
-          expect(page).to have_content("Unit Price")
-          expect(page).to have_content("Status")
-          expect(page).to have_content("#{@invoice_item_1.item_name}")
-          expect(page).to have_content("#{@invoice_item_1.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_1.status}")
-          expect(page).to have_content("#{@invoice_item_1.quantity}")
-          expect(page).to have_content("#{@invoice_item_2.item_name}")
-          expect(page).to have_content("#{@invoice_item_2.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_2.status}")
-          expect(page).to have_content("#{@invoice_item_2.quantity}")
+
+          expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_1.item_name}")
+          expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_1.quantity}")
+          expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_1.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Status" => "#{@invoice_item_1.status}")
+          expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_2.item_name}")
+          expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_2.quantity}")
+          expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_2.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Status" => "#{@invoice_item_2.status}")
         end
 
         visit "/admin/invoices/#{@invoice_2.id}"
 
         within ("#Items_Invoice") do
-          expect(page).to have_content("Item Name")
-          expect(page).to have_content("Quantity")
-          expect(page).to have_content("Unit Price")
-          expect(page).to have_content("Status")
-          expect(page).to have_content("#{@invoice_item_3.item_name}")
-          expect(page).to have_content("#{@invoice_item_4.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_5.status}")
-          expect(page).to have_content("#{@invoice_item_6.quantity}")
-          expect(page).to have_content("#{@invoice_item_3.item_name}")
-          expect(page).to have_content("#{@invoice_item_4.unit_price_in_dollars}")
-          expect(page).to have_content("#{@invoice_item_5.status}")
-          expect(page).to have_content("#{@invoice_item_6.quantity}")
-          expect(page).to_not have_content("#{@invoice_item_1.unit_price_in_dollars}")
-          expect(page).to_not have_content("#{@invoice_item_2.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Item Name" => "#{@invoice_item_3.item_name}")
+          expect(find(:table, "Items")).to have_table_row("Quantity" => "#{@invoice_item_4.quantity}")
+          expect(find(:table, "Items")).to have_table_row("Unit Price" => "#{@invoice_item_5.unit_price_in_dollars}")
+          expect(find(:table, "Items")).to have_table_row("Status" => "#{@invoice_item_6.status}")
         end
+      end
+    end
+
+    describe "User Story 35" do
+      it 'see the total revenue that will be generated from this invoice' do
+        visit "/admin/invoices/#{@invoice_1.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_1.total_revenue_in_dollars}")
+        
+        visit "/admin/invoices/#{@invoice_2.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_2.total_revenue_in_dollars}")
+
+        visit "/admin/invoices/#{@invoice_3.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_3.total_revenue_in_dollars}")
+      end
+    end
+
+    describe "User Story 36" do
+      it "see invoice status is a select field" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+
+        expect(page).to have_field(:status)
+      end
+
+      it "when user clicks select field, they can select a new status for the Invoice
+      and click the 'Update Invoice Status' button next to it to change the status. 
+      After clicking the button the user is taken back to the admin invoice show page with the status updated" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+        
+        expect(page).to have_field(:status, :with => "completed")
+
+        select "cancelled", from: :status
+        click_button "Update Status"
+       
+        expect(current_path).to eq("/admin/invoices/#{@invoice_1.id}")
+        expect(page).to have_field(:status, :with => "cancelled")
+
+        visit "/admin/invoices/#{@invoice_5.id}"
+        
+        expect(page).to have_field(:status, :with => "cancelled")
+
+        select "in progress", from: :status
+        click_button "Update Status"
+       
+        expect(current_path).to eq("/admin/invoices/#{@invoice_5.id}")
+        expect(page).to have_field(:status, :with => "in progress")
       end
     end
   end

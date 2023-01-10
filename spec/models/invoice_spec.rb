@@ -59,7 +59,7 @@ RSpec.describe Invoice, type: :model do
 
       InvoiceItem.create!(invoice_id: @invoice_1.id,  item_id: @item_1.id, quantity: 5, unit_price: 13635, status: 'shipped')
       InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 23324, status: 'shipped')
-  
+
       InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_2.id, quantity: 12, unit_price: 34873, status: 'packaged')
       InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_4.id, quantity: 8, unit_price: 2196, status: 'pending')
       InvoiceItem.create!(invoice_id: @invoice_2.id,  item_id: @item_5.id, quantity: 3, unit_price: 79140, status: 'packaged')
@@ -119,19 +119,24 @@ RSpec.describe Invoice, type: :model do
     
     it 'incomplete_invoices' do 
       expect(Invoice.incomplete_invoices).to match([@invoice_2, @invoice_3])
+    end 
+
+    it 'revenue' do 
+      expect(@invoice_1.total_revenue).to eq(278091)
     end
-  end
 
-  describe 'merchant items user stories' do
-    
+    it 'contains_successful_transaction?' do 
+      expect(@invoice_1.contains_successful_transaction?).to eq(true)
+      expect(@invoice_2.contains_successful_transaction?).to eq(false)
+    end
 
-# As a merchant
-# When I visit my items index page
-# Then I see the names of the top 5 most popular items ranked by total revenue generated
+    it 'price_in_dollars' do
+      expect(@invoice_1.total_revenue_in_dollars).to eq(2780.91)
+      expect(@invoice_2.total_revenue_in_dollars).to eq(11423.64)
+      expect(@invoice_3.total_revenue_in_dollars).to eq(13599.39)
+    end
+  end   
 
-# Only invoices with at least one successful transaction should count towards revenue
-# - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
-# - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price)
   describe 'instance methods' do
     before :each do 
       @merchant_1 = Merchant.create!(name: 'Schroeder-Jerde')
@@ -164,27 +169,11 @@ RSpec.describe Invoice, type: :model do
       @transaction_4 = @invoice_3.transactions.create!(credit_card_number: '4354495077693036', credit_card_expiration_date: '09/22/20', result: 'failed')
     end
 
-    ## got confused with how US 12 was presented and thought that these belong with US 12
-    ## these two blocks may belong to a later user story (maybe 17?)
-    ## keeping this here incase we need in future
-      describe '#total_revenue' do
-        xit 'returns the total revenue for all invoice items' do
-          expect(@invoice_1.total_revenue).to eq(3000)
-          expect(@invoice_2.total_revenue).to eq(2100)
-          # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
-          # find all the invoice_1; do (quantity * unit price) and sum those up
-        end
+    describe '#total_revenue' do
+      it 'returns the total revenue for all invoice items' do
+        expect(@invoice_1.total_revenue).to eq(3000)
+        expect(@invoice_2.total_revenue).to eq(2100)
       end
-        
-      describe '#revenue_for_invoice_item' do
-        xit 'can return the revenue for an invoice item' do
-          # - Revenue for an invoice item should be calculated as 
-          # the invoice item unit price multiplied by the quantity (do not use the item unit price) 
-          expect(@invoice_1.revenue_for_invoice_item(@merchant_1)).to eq(500)
-          # taking 1 invoice item and (quantity * unit price) to get the revenue for that 1 item
-          # will porbably have to make @invoice_item_1, etc
-        end
-      end 
     end
   end
 end

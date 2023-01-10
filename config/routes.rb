@@ -10,13 +10,13 @@ Rails.application.routes.draw do
   # end
 
   resources :merchants do
-    resources :invoices, only: [:index, :show]
+    resources :invoices, only: [:index, :show, :update]
     resources :items, only: [:index, :show, :edit, :update, :new, :create]
   end
 
   resources :admin, only:[:index]
   namespace :admin do
-    resources :merchants, only:[:index, :show, :edit, :update]
-    resources :invoices, only:[:index, :show]
+    resources :merchants, only:[:index, :show, :edit, :update, :new, :create]
+    resources :invoices, only:[:index, :show, :update]
   end
 end
