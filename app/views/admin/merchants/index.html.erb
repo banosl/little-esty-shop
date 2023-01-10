@@ -2,18 +2,31 @@
 
 <h2>Admin Dashboard</h2>
 
-
 <%= link_to "Dashboard", admin_index_path %>
 <%= link_to "Merchants", admin_merchants_path %>
-<%= link_to "Invoices", admin_invoices_path %><br><br>
+<%= link_to "Invoices", admin_invoices_path %>
+<%= link_to "Create a new merchant", new_admin_merchant_path %><br><br>
 
+<section id="top_merchants">
+<h3>Top 5 Merchants</h3>
+<ol>
+  <% @top_5_merchants.each do |merchant| %>
+    <li>
+      <div id=<%="link_to_merchant_#{merchant.id}"%>>
+        <%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %> | Total Revenue: <%="$#{"%.2f" % (merchant.revenue.to_f / 100)}"%><br><br>
+        <label> &#8195;Top selling date for <%=merchant.name%> was <%=merchant.top_selling_date%></label><br><br>
+      </div>
+    </li>
+  <% end %>
+</ol>
+</section>
 
 <div id="enabled_merchants">
   <h3>Enabled Merchants</h3>
   <% @enabled_merchants.each do |merchant| %>
     <a name="<%merchant.name%>"> <%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %></a>
-    <%= button_to "disable", "merchants/#{merchant.id}?status=disabled", method: :patch, id: merchant.id %>
-  <% end%>
+    <%= button_to "disable", "merchants/#{merchant.id}?status=disabled", method: :patch, id: merchant.id, params: {"merchant[status]" => 'disabled'} %>
+  <% end %>    
 </div>
 
 
@@ -21,7 +34,7 @@
   <h3>Disabled Merchants</h3>
   <% @disabled_merchants.each do |merchant| %>
     <a name="<%merchant.name%>"> <%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %></a>
-    <%= button_to "enable", "merchants/#{merchant.id}?status=enabled", method: :patch, id: merchant.id %>
+    <%= button_to "enable", "merchants/#{merchant.id}?status=enabled", method: :patch, id: merchant.id, params: { "merchant[status]" => 'enabled'} %>
   <% end%>
 </div>
 
