@@ -1,13 +1,17 @@
-<h1><center>Little Esty Shop<center></h1>
+<header>
+  <h1 class="main-title">Little Esty Shop</h1>
 
-<h2>Admin Dashboard</h2>
+  <div class="sub-header">
+    <h2 class="page-title">Admin Dashboard</h2>
+    <nav class="navigation">
+      <%= link_to "Dashboard", admin_index_path %>
+      <%= link_to "Merchants", admin_merchants_path %>
+      <%= link_to "Invoices", admin_invoices_path %>
+    </nav>
+  </div> 
+</header>
 
-<%= link_to "Dashboard", admin_index_path %>
-<%= link_to "Merchants", admin_merchants_path %>
-<%= link_to "Invoices", admin_invoices_path %><br><br>
-
-<h3><center>Invoices<center></h3>
-
+<h3 class="invoice-header">Invoices</h3>
 <% @invoices.each do |invoice| %>
-  <%= link_to "Invoice ##{invoice.id}", "/admin/invoices/#{invoice.id}" %>%
+  <p><font size="-1"><%= link_to "Invoice ##{invoice.id}", "/admin/invoices/#{invoice.id}" %><p></font>
 <% end %>
