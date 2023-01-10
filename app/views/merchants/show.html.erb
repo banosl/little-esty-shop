@@ -16,15 +16,15 @@
   <div class='column'>
     <h4 class="invoice-header">Items Ready to Ship</h4>
       <p><% @merchant.unshipped_items.order(:invoice_created_at).each do |item| %></p>
-      <div id="unshipped_item_invoice_<%= item.invoice_id %>">
-        <p><font size="-1">
-          <%= item.name %> |
-          <%= item.invoice_created_at.strftime("%A, %B %d, %Y") %>  |
-          <%= link_to "Invoice ID #{item.invoice_id}", "/merchants/#{@merchant.id}/invoices/#{item.invoice_id}" %>
-        </p></font>
-      </div>
+        <div id="unshipped_item_invoice_<%= item.invoice_id %>">
+          <p><font size="-1">
+            <%= item.name %> |
+            <%= item.invoice_created_at.strftime("%A, %B %d, %Y") %>  |
+            <%= link_to "Invoice ID #{item.invoice_id}", "/merchants/#{@merchant.id}/invoices/#{item.invoice_id}" %>
+          </p></font>
+        </div>
       <% end %>
-    </div>
+  </div>
   <div class='column'>
     <h4 class="invoice-header">Favorite customers</h4>  
       <p><% @merchant.customers.merchant_top_customers.each do |customer| %></p>

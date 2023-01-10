@@ -1,25 +1,36 @@
-<h1><center>Little Esty Shop<center></h1>
+<header>
+  <h1 class="main-title">Little Esty Shop</h1>
 
-<h2>Admin Dashboard</h2>
+<div class="sub-header">
+  <h2 class="page-title">Admin Dashboard</h2>
+    <nav class="navigation">
+      <%= link_to "Dashboard", admin_index_path %>
+      <%= link_to "Merchants", admin_merchants_path %>
+      <%= link_to "Invoices", admin_invoices_path %>
+    </nav>
+  </div>
+</header>
 
-<%= link_to "Dashboard", admin_index_path %>
-<%= link_to "Merchants", admin_merchants_path %>
-<%= link_to "Invoices", admin_invoices_path %>
+<main>
 
-<section id="top_customers">
-<h3>Top 5 Customers</h3>
-<ol>
-  <% @top_5_customers.each do |customer| %>
-    <li><%="#{customer.first_name} #{customer.last_name} - #{customer.count_result} purchases"%></li>
-  <% end %>
-</ol>
-</section>
-
-<section id="incomplete_invoices">
-<h3>Incomplete Invoices</h3>
-<ul>
-  <% @incomplete_invoices.each do |invoice| %>
-    <li><%=link_to "Invoice ##{invoice.id} - #{invoice.created_at.strftime("%A, %B %d, %Y")}", "/admin/invoices/#{invoice.id}"%></li>
-  <% end %>
-</ul>
-</section>
+<div class='row'>
+  <div class='column'>
+    <h4 class="invoice-header">Incomplete Invoices</h4>
+      <section id="incomplete_invoices">
+        <% @incomplete_invoices.each do |invoice| %>
+          <p><%=link_to "Invoice ##{invoice.id} - #{invoice.created_at.strftime("%A, %B %d, %Y")}", "/admin/invoices/#{invoice.id}"%></p>
+        <% end %>
+      </section>
+    </div>
+ 
+  <div class='column'>
+    <section id="top_customers">
+      <h4 class="invoice-header">Top 5 Customers</h4>
+        <ol>
+          <% @top_5_customers.each do |customer| %>
+            <li><%="#{customer.first_name} #{customer.last_name} - #{customer.count_result} purchases"%></li>
+          <% end %>
+        </ol>
+      </section>
+  </div>
+</main>

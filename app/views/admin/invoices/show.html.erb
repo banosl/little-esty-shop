@@ -1,60 +1,60 @@
 <header>
-<h1 class="main-title">Little Esty Shop</h1>
+  <h1 class="main-title">Little Esty Shop</h1>
 
-<div class="sub-header">
-<h2 class="page-title">Admin Dashboard</h2>
-<nav class="navigation">
-<%= link_to "Dashboard", admin_index_path %>
-<%= link_to "Merchants", admin_merchants_path %>
-<%= link_to "Invoices", admin_invoices_path %><br><br>
-</nav>
-</div>
+  <div class="sub-header">
+    <h2 class="page-title">Admin Dashboard</h2>
+      <nav class="navigation">
+      <%= link_to "Dashboard", admin_index_path %>
+      <%= link_to "Merchants", admin_merchants_path %>
+      <%= link_to "Invoices", admin_invoices_path %><br><br>
+      </nav>
+  </div>
 </header>
 
 <main>
-<h3 class="invoice-header">Invoice #<%= @invoice.id %></h3>
-<section class="customer-info">
+  <h3 class="invoice-header">Invoice #<%= @invoice.id %></h3>
+  <section class="customer-info">
 
-<section class="status">
-<p class='status_colon'>Status:
+  <section class="status">
+    <p class='status_colon'>Status:
 
-<%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
-<%= form.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
-<%= form.submit "Update Status", class: 'submit' %>
-<% end %>
-</section>
-
-<p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
-<p>Total Revenue: $<%= @invoice.total_revenue_in_dollars %><p>
-
-<h4>Customer:</h4>
-<div class="customer-address">
-<p><%= @invoice.customer.full_name %></p>
-<p>address</p>
-<p>state</p>
-</div>
-</section>
-
-<section class="invoice-table" id="Items_Invoice">
-<h4>Items on this Invoice:</h4>
-
-<table>
-  <caption hidden>Items</caption>
-    <tr>
-      <th>Item Name</th>
-      <th>Quantity</th>
-      <th>Unit Price</th>
-      <th>Status</th>
-    </tr>
-  
-    <% @invoice_items.each do |item| %>
-      <tr>
-        <td><%= item.item_name %></td>
-        <td><%= item.quantity %></td>
-        <td>$<%= item.unit_price_in_dollars %></td>
-        <td><%= item.status %></td>
-      </tr>
+    <%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
+      <%= form.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
+      <%= form.submit "Update Status", class: 'submit' %>
     <% end %>
-</table>
-</section>
+    </section>
+
+    <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
+    <p>Total Revenue: $<%= @invoice.total_revenue_in_dollars %><p>
+
+    <h4>Customer:</h4>
+      <div class="customer-address">
+      <p><%= @invoice.customer.full_name %></p>
+      <p>address</p>
+      <p>state</p>
+    </div>
+  </section>
+
+  <section class="invoice-table" id="Items_Invoice">
+    <h4>Items on this Invoice:</h4>
+
+    <table>
+      <caption hidden>Items</caption>
+        <tr>
+          <th>Item Name</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Status</th>
+        </tr>
+      
+      <% @invoice_items.each do |item| %>
+        <tr>
+          <td><%= item.item_name %></td>
+          <td><%= item.quantity %></td>
+          <td>$<%= item.unit_price_in_dollars %></td>
+          <td><%= item.status %></td>
+        </tr>
+      <% end %>
+    </table>
+  </section>
 </main>
