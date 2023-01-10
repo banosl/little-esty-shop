@@ -1,6 +1,8 @@
 <header>
   <h1 class="main-title">Little Esty Shop</h1>
-
+    <%# <div class="sub-header">
+      <% render partial: 'layouts/navbar' %>
+    <%# </div> %>
   <div class="sub-header">
     <h2 class="page-title"><%= @merchant.name %></h2>
     <nav class="navigation">
@@ -8,8 +10,8 @@
       <%= link_to "My Items", "/merchants/#{@merchant.id}/items" %>
       <%= link_to "My Invoices", "/merchants/#{@merchant.id}/invoices" %>
     </nav>
-  </div>
-</header>
+   </div> 
+ </header>
 
 <main>
   <h3 class="invoice-header">Invoice #<%= @invoice.id %></h3>
