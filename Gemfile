@@ -63,3 +63,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # see table in rails c
 gem 'hirb'
+
+# for reaching out to the API for results
+gem 'httparty'
