@@ -134,10 +134,9 @@ RSpec.describe "Admin/Merchant/show" do
 
       it 'displays a flash message stating that the information has been updated' do 
         visit "/admin/merchants/#{@merchant_1.id}/edit"
-        fill_in "name", with: "Jeff"
+        fill_in "Name", with: "Jeff"
         click_button "Edit Merchant"
         expect(page).to have_content("Merchant information successfully updated.")
-        # expect(flash[:notice]).to match(/Merchant information succesfully updated.*/)
       end
     end
   end

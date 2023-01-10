@@ -52,14 +52,6 @@ RSpec.describe 'Merchant Invoice Show Page' do
     end
   end
 
-  # As a merchant
-  # When I visit my merchant invoice show page
-  # Then I see all of my items on the invoice including:
-  # - Item name
-  # - The quantity of the item ordered
-  # - The price the Item sold for
-  # - The Invoice Item status
-  # And I do not see any information related to Items for other merchants
   describe 'user story 16' do 
     it 'displays all of the invoice items and attributes' do 
       visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
@@ -87,26 +79,16 @@ RSpec.describe 'Merchant Invoice Show Page' do
       expect(page).to have_content(@invoice_item_4.status)
     end
   end
-  # When I visit my merchant invoice show page
-  # Then I see the total revenue that will be generated from all of my items on the invoice
+  
   describe 'user story 17' do
     it 'displays the total revenue from all items on the invoice' do 
       visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
 
-      expect(page).to have_content(@invoice_1.total_revenue)
-      expect(page).to_not have_content(@invoice_3.total_revenue)
+      expect(page).to have_content(@invoice_1.total_revenue_in_dollars)
+      expect(page).to_not have_content(@invoice_3.total_revenue_in_dollars)
     end
   end
-  # As a merchant
-  # When I visit my merchant invoice show page
-  # I see that each invoice item status is a select field
-  # And I see that the invoice item's current status is selected
-  # When I click this select field,
-  # Then I can select a new status for the Item,
-  # And next to the select field I see a button to "Update Item Status"
-  # When I click this button
-  # I am taken back to the merchant invoice show page
-  # And I see that my Item's status has now been updated
+  
   describe 'user story 18' do 
     it 'displays the invoice item status as a select field' do 
       visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
