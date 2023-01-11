@@ -8,6 +8,8 @@
   <%= f.label :unit_price %>
   <%= f.number_field :unit_price, :value => "#{item_unit_price}" %>
   <br><br>
-  <%# <%= f.hidden_field :status, value: 'disabled' %> %>
+  <% if has_status %>
+    <%= f.hidden_field :status, value: 'disabled' %>
+  <% end %>
   <%= f.submit button_text %>
 <% end %>
