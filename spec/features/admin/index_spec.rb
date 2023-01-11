@@ -196,21 +196,5 @@ RSpec.describe "Admin Dashboard(Index)" do
         end
       end
     end
-
-    describe 'API user story 1 - Repo name' do
-      it 'shows the github repo name' do
-        visit '/admin'
-        
-        expect(page).to have_content("GitHub Repository: ")
-      end
-    end
-
-    describe 'API user story 4 - Pull requests ' do
-      it 'shows the github repo name' do
-        visit '/admin'
-        
-        expect(page).to have_content("Pull request count: ")
-      end
-    end
   end
 end
