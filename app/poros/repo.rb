@@ -1,6 +1,6 @@
 class Repo
   attr_reader :name
-  def initialize(parsed)
-    @name = parsed[:name]
+  def initialize(data)
+    @name = data[:name]
   end
 end
