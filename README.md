@@ -1,10 +1,13 @@
-# Little Esty Shop
+<center>![eCommerce-Cartoon-1024x576](https://user-images.githubusercontent.com/111314699/211920995-1e8a5cb2-86a3-451a-a269-8becae889060.png) 
+
+
+# <center>Little Esty Shop</center>
 
 ## :books:About the Project:pencil2:
 
 "Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. The learning goals for this project included practice designing a normalized database schema and defining model relationships, utilizing advanced routing techniques, utilizing advanced Active Record techniques to perform complex database queries, and to practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code.
 
-## Requirements<br>
+## Requirements:thumbsup::skin-tone-4:<br>
 :heavy_check_mark:Rails 5.2.x<br>
 :heavy_check_mark:Ruby 2.7.4
 
