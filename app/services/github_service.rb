@@ -7,10 +7,10 @@ class GithubService
     collaborators = response.map {|user| GithubUser.new(user)}
   end
 
-  def get_repo_name
-    response = HTTParty.get(base_uri)
-    repo = GithubRepo.new(response)
-  end
+  # def get_repo_name
+  #   response = HTTParty.get(base_uri)
+  #   repo = GithubRepo.new(response)
+  # end
 
   def get_contributor_commits
     response = HTTParty.get("#{base_uri}/stats/contributors", options)
