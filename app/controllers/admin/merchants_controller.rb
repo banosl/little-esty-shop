@@ -22,7 +22,7 @@ module Admin
 
         current_merchant.save 
 
-        redirect_back fallback_location: "admin/merchants#{current_merchant.name}"
+        redirect_back fallback_location: "/admin/merchants#{current_merchant.name}"
       else 
         current_merchant.update(merchant_params)
 
