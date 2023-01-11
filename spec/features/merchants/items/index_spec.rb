@@ -209,12 +209,12 @@ RSpec.describe 'Merchant Items Index page' do
         visit merchant_items_path(@merchant_1.id)
 
         within("#popular_items_#{@merchant_1.id}") do
-          expect(page).to have_content("Top selling date for #{@item_7.name} was ")
-          expect(page).to have_content("Top selling date for #{@item_5.name} was ")
-          expect(page).to have_content("Top selling date for #{@item_4.name} was ")
-          expect(page).to have_content("Top selling date for #{@item_6.name} was ")
-          expect(page).to have_content("Top selling date for #{@item_2.name} was ")
-          expect(page).to_not have_content("Top selling date for #{@item_1.name} was ")
+          expect(page).to have_content("Top selling date for #{@item_7.name} was #{@item_7.top_item_selling_date.strftime('%m/%d/%y')}")
+          expect(page).to have_content("Top selling date for #{@item_5.name} was #{@item_5.top_item_selling_date.strftime('%m/%d/%y')}")
+          expect(page).to have_content("Top selling date for #{@item_4.name} was #{@item_4.top_item_selling_date.strftime('%m/%d/%y')}")
+          expect(page).to have_content("Top selling date for #{@item_6.name} was #{@item_6.top_item_selling_date.strftime('%m/%d/%y')}")
+          expect(page).to have_content("Top selling date for #{@item_2.name} was #{@item_2.top_item_selling_date.strftime('%m/%d/%y')}")
+          expect(page).to_not have_content("Top selling date for #{@item_1.name} was #{@item_1.top_item_selling_date.strftime('%m/%d/%y')}")
         end
       end
     end

@@ -9,10 +9,10 @@ class ApplicationController < ActionController::Base
   def repo
     search = RepoSearch.new
     @repo = search.repo_info
+    @pr_count = search.pull_request_info
   end
-
+  
   def welcome
-    
   end
-
+  
 end
