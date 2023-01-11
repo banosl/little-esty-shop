@@ -19,4 +19,10 @@
       </div>
     <% end %>
   </body>
+
+  <div>
+    <% GithubService.new.get_contributor_commits.each do |user| %>
+      <%= user.name %> Total Commits: <%= user.total_commits %><br>
+    <% end %>
+  </div>
 </html>
