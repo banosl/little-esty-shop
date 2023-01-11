@@ -38,8 +38,9 @@ module Admin
     end
 
     def create 
-      merchant = Merchant.create(merchant_params) 
-      merchant.save
+      # require 'pry'; binding.pry
+      merchant = Merchant.create!(merchant_params) 
+      merchant.save!
       redirect_to admin_merchants_path
     end
 
