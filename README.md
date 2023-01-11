@@ -1,4 +1,4 @@
-# Little Esty Shop:shopping_bags:
+# <center>Little Esty Shop</center>
 
 ## :pencil2:About the Project
 
