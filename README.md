@@ -1,6 +1,4 @@
-
-
-##<center>Little Esty Shop</center>
+##Little Esty Shop
 
 ## :books:About the Project:pencil2:
 
