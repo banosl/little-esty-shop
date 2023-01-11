@@ -7,20 +7,24 @@ class GithubService
     collaborators = response.map {|user| GithubUser.new(user)}
   end
 
-  # def get_repo_name
-  #   response = HTTParty.get(base_uri)
-  #   repo = GithubRepo.new(response)
-  # end
+  def get_repo
+    GithubRepo.new(HTTParty.get(base_uri))
+  end
 
   def get_contributor_commits
     response = HTTParty.get("#{base_uri}/stats/contributors", options)
     users = response.map do |stat|
       GithubUser.new(stat["author"], stat["total"])
     end
-    users.select do |user|
+
+    u = users.select do |user|
       collabs = get_collaborators.map(&:name)
       collabs.include?(user.name)
     end
+  end
+
+  def get_total_pull_requests 
+    HTTParty.get("#{base_uri}/pulls?state=closed", options).size
   end
 
   private 
