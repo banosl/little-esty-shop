@@ -1,6 +1,6 @@
 # Little Esty Shop
 
-## About the Project
+## About the Project:pencil2:
 
 "Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. The learning goals for this project included practice designing a normalized database schema and defining model relationships, utilizing advanced routing techniques, utilizing advanced Active Record techniques to perform complex database queries, and to practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code.
 
