@@ -1,4 +1,4 @@
-<center>![eCommerce-Cartoon-1024x576](https://user-images.githubusercontent.com/111314699/211920995-1e8a5cb2-86a3-451a-a269-8becae889060.png) 
+<center> (https://user-images.githubusercontent.com/111314699/211920995-1e8a5cb2-86a3-451a-a269-8becae889060.png) 
 
 
 # <center>Little Esty Shop</center>
