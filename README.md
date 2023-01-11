@@ -21,7 +21,7 @@
 * Run the test suite with `bundle exec rspec`.
 * Run your development server with `rails s` to see the app in action.
 
-##Phases
+## Phases
 
 * [Database Setup](https://github.com/turingschool-examples/little-esty-shop/blob/main/doc/db_setup.md)
 * [User Stories](https://github.com/turingschool-examples/little-esty-shop/blob/main/doc/user_stories.md)
