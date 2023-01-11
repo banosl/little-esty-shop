@@ -8,6 +8,9 @@
 :heavy_check_mark:Rails 5.2.x<br>
 :heavy_check_mark:Ruby 2.7.4
 
+## Relationships
+![Screen Shot 2023-01-11 at 14 06 51](https://user-images.githubusercontent.com/111314699/211917954-3dea4971-5d48-466c-a070-de0dd737127c.png)
+
 ## Setup
 
 * Fork this repository
