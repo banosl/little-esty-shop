@@ -11,4 +11,10 @@ RSpec.describe 'Welcome Page' do
     expect(page).to have_content("Kelsie Porter")
     expect(page).to have_content("Anhnhi Tran")
   end
+
+  it 'displays total commits from API call' do
+    visit '/'
+
+    expect(page).to have_content("Total Commits: ")
+  end
 end
