@@ -6,6 +6,12 @@ RSpec.describe InvoiceItem, type: :model do
     it {should belong_to :invoice}
   end
 
+  describe 'validations' do
+    it {should validate_presence_of :quantity}
+    it {should validate_presence_of :unit_price}
+    it {should validate_presence_of :status}
+  end
+
   describe "Model Methods" do
     before :each do
       @merchant_1 = Merchant.create!(name: 'Schroeder-Jerde', status: :disabled)
