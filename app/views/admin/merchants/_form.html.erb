@@ -1,0 +1,9 @@
+<%= form_with model: [:admin, @merchant], url: path, method: method, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, :value => "#{item_name}" %>
+  <br><br>
+  <% if has_status %>
+    <%= f.hidden_field :status, value: 'disabled' %>
+  <% end %>
+  <%= f.submit button_text %>
+<% end %>
