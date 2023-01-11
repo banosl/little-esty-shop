@@ -4,13 +4,11 @@
 
 "Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. The learning goals for this project included practice designing a normalized database schema and defining model relationships, utilizing advanced routing techniques, utilizing advanced Active Record techniques to perform complex database queries, and to practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code.
 
-## Requirements
+## Requirements:ruby_logo:
 *Rails 5.2.x
-:ruby_logo:Ruby 2.7.4:ruby_logo:
+*Ruby 2.7.4
 
 ## Setup
-
-This project requires Ruby 2.7.4.
 
 * Fork this repository
 * Clone your fork
@@ -20,9 +18,9 @@ This project requires Ruby 2.7.4.
 * Run the test suite with `bundle exec rspec`.
 * Run your development server with `rails s` to see the app in action.
 
-## Phases
+## Collaborators
 
-1. [Database Setup](./doc/db_setup.md)
-1. [User Stories](./doc/user_stories.md)
-1. [Extensions](./doc/extensions.md)
-1. [Evaluation](./doc/evaluation.md)
+1. Leo Banos Garcia https://github.com/banosl
+1. Matisse Mallette
+1. Kelsie Porter
+1. Anhnhi Tran
