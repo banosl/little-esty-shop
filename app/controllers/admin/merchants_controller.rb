@@ -22,7 +22,7 @@ module Admin
 
         current_merchant.save 
 
-        redirect_back fallback_location: "admin/merchants#{current_merchant.name}"
+        redirect_back fallback_location: "/admin/merchants#{current_merchant.name}"
       else 
         current_merchant.update(merchant_params)
 
@@ -38,8 +38,9 @@ module Admin
     end
 
     def create 
-      merchant = Merchant.create(merchant_params) 
-      merchant.save
+      # require 'pry'; binding.pry
+      merchant = Merchant.create!(merchant_params) 
+      merchant.save!
       redirect_to admin_merchants_path
     end
 

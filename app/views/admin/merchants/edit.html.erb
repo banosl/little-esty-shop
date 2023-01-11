@@ -1,6 +1,2 @@
 <h3>Edit Merchant Information</h3>
-<%= form_with model: [:admin, @merchant], local: :true do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name, value: "#{@merchant.name}" %>
-  <%= form.submit "Edit Merchant" %>
-<% end %>
+<%= render partial: 'form', locals: {path: "/admin/merchants/#{@merchant.id}", method: :patch, button_text: "Edit Merchant", merchant_name: "#{@merchant.name}" , has_status: false} %>
