@@ -15,6 +15,16 @@ RSpec.describe 'Welcome Page' do
   it 'displays total commits from API call' do
     visit '/'
 
-    expect(page).to have_content("Total Commits: ")
+    expect(page).to have_content("MatisseMallette Total Commits: ")
+    expect(page).to have_content("KelsiePorter Total Commits: ")
+    expect(page).to have_content("banosl Total Commits: ")
+    expect(page).to have_content("anhtran811 Total Commits: ")
+
+    visit '/admin'
+
+    expect(page).to have_content("MatisseMallette Total Commits: ")
+    expect(page).to have_content("KelsiePorter Total Commits: ")
+    expect(page).to have_content("banosl Total Commits: ")
+    expect(page).to have_content("anhtran811 Total Commits: ")
   end
 end
