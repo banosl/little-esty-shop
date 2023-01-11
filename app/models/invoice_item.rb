@@ -4,6 +4,8 @@ class InvoiceItem < ApplicationRecord
   belongs_to :item
   belongs_to :invoice
 
+  validates_presence_of :quantity, :unit_price, :status
+
   def unit_price_in_dollars
     unit_price/100.to_f
   end
