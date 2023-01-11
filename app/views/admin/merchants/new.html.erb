@@ -1,8 +1,4 @@
-<%= form_with model: [:admin, @merchant], class: "merchant_form", local: true do |f| %>
-<pre>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <%= f.hidden_field :status, value: 'disabled' %>
-  <%= f.submit 'Submit' %>
-</pre>
-<% end %>
+<h1>Create a new merchant</h1>
+
+
+<%= render partial: 'form', locals: {path: "/admin/merchants", method: :post, button_text: "Submit", merchant_name: '' , has_status: true } %>

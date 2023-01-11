@@ -1,6 +1,7 @@
+<<<<<<< HEAD
 class ApplicationController < ActionController::Base
   before_action :load_github_service
-
+  
   def welcome
   end
 

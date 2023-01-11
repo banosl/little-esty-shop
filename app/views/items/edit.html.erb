@@ -1,9 +1,3 @@
-<%= form_with model: @item, url: "/merchants/#{@merchant.id}/items/#{@item.id}", method: :patch, local: true do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name, :value => "#{@item.name}" %>
-  <%= form.label :description %>
-  <%= form.text_field :description, :value => "#{@item.description}" %>
-  <%= form.label :unit_price %>
-  <%= form.number_field :unit_price, :value => "#{@item.unit_price}" %>
-  <%= form.submit "Update Item" %>
-<% end %>
+<h1>Create your item</h1>
+
+<%= render partial: 'form', locals: {path: "/merchants/#{@merchant.id}/items/#{@item.id}", method: :patch, button_text: "Update Item", item_name: "#{@item.name}", item_description: "#{@item.description}", item_unit_price: "#{@item.unit_price}", has_status: false} %>

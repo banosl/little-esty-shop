@@ -1,0 +1,15 @@
+<%= form_with model: @item, url: path, method: method, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, :value => "#{item_name}" %>
+  <br><br>
+  <%= f.label :description %>
+  <%= f.text_field :description, :value => "#{item_description}" %>
+  <br><br>
+  <%= f.label :unit_price %>
+  <%= f.number_field :unit_price, :value => "#{item_unit_price}" %>
+  <br><br>
+  <% if has_status %>
+    <%= f.hidden_field :status, value: 'disabled' %>
+  <% end %>
+  <%= f.submit button_text %>
+<% end %>

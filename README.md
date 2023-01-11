@@ -1,28 +1,17 @@
 # Little Esty Shop
 
-## Background and Description
+## :books:About the Project:pencil2:
 
-"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. The learning goals for this project included practice designing a normalized database schema and defining model relationships, utilizing advanced routing techniques, utilizing advanced Active Record techniques to perform complex database queries, and to practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code.
 
-## Learning Goals
-- Practice designing a normalized database schema and defining model relationships
-- Utilize advanced routing techniques including namespacing to organize and group like functionality together.
-- Utilize advanced active record techniques to perform complex database queries
-- Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code
+## Requirements<br>
+:heavy_check_mark:Rails 5.2.x<br>
+:heavy_check_mark:Ruby 2.7.4
 
-## Requirements
-- must use Rails 5.2.x
-- must use PostgreSQL
-- all code must be tested via feature tests and model tests, respectively
-- must use GitHub branching, team code reviews via GitHub comments, and github projects to track progress on user stories
-- must include a thorough README to describe the project
-- must deploy completed code to Heroku
-- Continuous Integration / Continuous Deployment is not allowed
-- Any gems added to the project must be approved by an instructor
+## Relationships
+![Screen Shot 2023-01-11 at 14 06 51](https://user-images.githubusercontent.com/111314699/211917954-3dea4971-5d48-466c-a070-de0dd737127c.png)
 
 ## Setup
-
-This project requires Ruby 2.7.4.
 
 * Fork this repository
 * Clone your fork
@@ -32,9 +21,9 @@ This project requires Ruby 2.7.4.
 * Run the test suite with `bundle exec rspec`.
 * Run your development server with `rails s` to see the app in action.
 
-## Phases
+## Collaborators
 
-1. [Database Setup](./doc/db_setup.md)
-1. [User Stories](./doc/user_stories.md)
-1. [Extensions](./doc/extensions.md)
-1. [Evaluation](./doc/evaluation.md)
+1. Leo Banos Garcia https://github.com/banosl
+1. Matisse Mallette https://github.com/matissemallette
+1. Kelsie Porter https://github.com/kelsieporter
+1. Anhnhi Tran https://github.com/anhtran811

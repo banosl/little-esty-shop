@@ -5,6 +5,8 @@ class Customer < ApplicationRecord
   has_many :items, through: :invoice_items, dependent: :destroy
   has_many :merchants, through: :items, dependent: :destroy
 
+  validates_presence_of :first_name, :last_name
+
   def self.merchant_top_customers
     joins(:invoices, :transactions)
       .where(transactions: { result: "success"})
