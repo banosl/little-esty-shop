@@ -10,6 +10,10 @@ RSpec.describe Invoice, type: :model do
     it {should have_many(:merchants).through(:items)}
   end
 
+  describe 'validations' do
+    it {should validate_presence_of :status}
+  end
+
   describe 'admin merchant spec methods' do 
     #follow up with teammates on renaming this block
     before :each do 
