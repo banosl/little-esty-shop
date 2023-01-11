@@ -19,15 +19,4 @@
       </div>
     <% end %>
   </body>
-
-<div class="repo-name">
-  <% response = HTTParty.get("https://api.github.com/repos/banosl/little-esty-shop") %>
-    <% parsed = JSON.parse(response.body, symbolize_names: true) %>
-    <% @repo = Repo.new(parsed) %>
-    <p> GitHub Repository: <%= @repo.name %></p>
-</div>
-
-
-
-
 </html>

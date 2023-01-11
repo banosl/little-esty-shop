@@ -66,3 +66,4 @@ gem 'hirb'
 
 # for reaching out to the API for results
 gem 'httparty'
+gem 'figaro'
