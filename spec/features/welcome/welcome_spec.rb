@@ -9,7 +9,7 @@ RSpec.describe 'Welcome Page' do
     expect(page).to have_content("KelsiePorter Total Commits: ")
     expect(page).to have_content("banosl Total Commits: ")
     expect(page).to have_content("anhtran811 Total Commits: ")
-    expect(page).to have_content("Total Merged Pull Requests ")
+    expect(page).to have_content("Total Merged Pull Requests: ")
 
     visit '/admin'
 

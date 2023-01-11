@@ -2,13 +2,13 @@ require 'httparty'
 
 class GithubService 
   
-  def get_collaborators 
+  def get_collaborators
     response = HTTParty.get("#{base_uri}/collaborators", options)
     collaborators = response.map {|user| GithubUser.new(user)}
   end
 
   def get_repo
-    GithubRepo.new(HTTParty.get(base_uri))
+    GithubRepo.new(HTTParty.get(base_uri, options))
   end
 
   def get_contributor_commits
