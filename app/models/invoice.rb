@@ -13,10 +13,6 @@ class Invoice < ApplicationRecord
     where(status: "in progress")
   end
 
-  def self.complete_invoices 
-    where(status: "complete")
-  end
-
   def contains_successful_transaction?
     transactions.where(result: "success").count > 0
   end
