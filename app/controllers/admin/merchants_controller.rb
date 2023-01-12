@@ -16,18 +16,12 @@ module Admin
 
     def update 
       current_merchant = Merchant.find(params[:id])
-
-      if params[:status].present? && 
-        current_merchant.update(merchant_params)
-
-        current_merchant.save 
-
-        redirect_back fallback_location: "/admin/merchants#{current_merchant.name}"
-      else 
-        current_merchant.update(merchant_params)
-
-        current_merchant.save
-
+      current_merchant.update(merchant_params)
+      current_merchant.save 
+      
+      if merchant_params[:status].present? 
+        redirect_to "/admin/merchants/"
+      elsif merchant_params[:name].present? 
         redirect_to "/admin/merchants/#{current_merchant.id}"
         flash[:alert] = "Merchant information successfully updated."
       end
