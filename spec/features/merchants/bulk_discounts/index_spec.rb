@@ -8,14 +8,14 @@ RSpec.describe 'Bulk Discount Index' do
       @merchant_3 = Merchant.create!(name: 'Willms and Sons')
 
     #bulk_discounts
-      @bulk_discount_1 = @merchant_1.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 5})
-      @bulk_discount_2 = @merchant_1.create!({name: "20% Off", percent_discount: 20, quantity_threshold: 15})
-      @bulk_discount_3 = @merchant_1.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 25})
-      @bulk_discount_4 = @merchant_2.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 15})
-      @bulk_discount_5 = @merchant_2.create!({name: "25% Off", percent_discount: 25, quantity_threshold: 35})
-      @bulk_discount_6 = @merchant_2.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 45})
-      @bulk_discount_7 = @merchant_3.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 25})
-      @bulk_discount_8 = @merchant_3.create!({name: "40% Off", percent_discount: 40, quantity_threshold: 55})
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 5})
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!({name: "20% Off", percent_discount: 20, quantity_threshold: 15})
+      @bulk_discount_3 = @merchant_1.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 25})
+      @bulk_discount_4 = @merchant_2.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 15})
+      @bulk_discount_5 = @merchant_2.bulk_discounts.create!({name: "25% Off", percent_discount: 25, quantity_threshold: 35})
+      @bulk_discount_6 = @merchant_2.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 45})
+      @bulk_discount_7 = @merchant_3.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 25})
+      @bulk_discount_8 = @merchant_3.bulk_discounts.create!({name: "40% Off", percent_discount: 40, quantity_threshold: 55})
     
     #items
       @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
@@ -104,7 +104,19 @@ RSpec.describe 'Bulk Discount Index' do
   end
 
   describe "visiting a merchant's bulk discount index page" do
-    it "see all the merchant's bulk discounts including their percentage discount and quanityt thresholds"
+    it "see all the merchant's bulk discounts including their percentage discount and quantity thresholds" do
+      visit merchant_bulk_discounts_path(@merchant_1.id)
+
+      within "#discount-#{@bulk_discount_1.id}" do
+        expect(page).to have_content("Discount: #{@bulk_discount_1.percent_discount}%")
+        expect(page).to have_content("Quantity threshold: #{@bulk_discount_1.quantity_threshold}")
+      end
+
+      within "#discount-#{@bulk_discount_2.id}" do
+        expect(page).to have_content("Discount: #{@bulk_discount_2.percent_discount}%")
+        expect(page).to have_content("Quantity threshold: #{@bulk_discount_2.quantity_threshold}")
+      end
+    end
 
     it "each bulk discount listed includes a link to its show page"
   end
