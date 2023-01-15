@@ -120,7 +120,16 @@ RSpec.describe 'Bulk Discount Show', type: :feature do
     end
 
     it "when edit is clicked the user is taken to a new page with a form to edit the discount and
-    the values are pre populated with existing data"
+    the values are pre populated with existing data" do
+      visit merchant_bulk_discount_path(@merchant_1.id, @bulk_discount_1.id)
+
+      click_link "Edit Bulk Discount"
+
+      expect(current_path).to  eq(edit_merchant_bulk_discount_path(@merchant_1.id, @bulk_discount_1.id))
+      expect(page).to have_field(:name, :with => @bulk_discount_1.name)
+      expect(page).to have_field(:percent_discount, :with => @bulk_discount_1.percent_discount)
+      expect(page).to have_field(:quantity_threshold, :with => @bulk_discount_1.quantity_threshold)
+    end
 
     it "in the edit page when any information is changed and submit is selected, 
     the user is redirected to the bulk discount's show page with the changes shown"
