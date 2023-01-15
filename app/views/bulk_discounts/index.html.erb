@@ -19,6 +19,9 @@
 <% @bulk_discounts.each do |discount| %>
   <div id="discount-<%= discount.id %>">
     <%=link_to "#{discount.name}", merchant_bulk_discount_path(@merchant.id, discount.id) %>
+    <%= form_with url: "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete, local: true do |form| %>
+      <%= form.submit "Delete" %>
+    <% end %>
       <ul>
         <li>Discount: <%= discount.percent_discount %>%</li>
         <li>Quantity threshold: <%= discount.quantity_threshold %></li>
