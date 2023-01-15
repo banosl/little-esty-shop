@@ -19,19 +19,5 @@
     <% end %>
   </body>
 
-  <div>
-    <div>
-      Git Repo Name: 
-      <%= @github_service.get_repo.name %>
-    </div>
-    <div>
-      <% @github_service.get_contributor_commits.each do |user| %>
-        <%= user.name %> Total Commits: <%= user.total_commits %><br>
-      <% end %>
-    </div>
-    <div>
-      Total Merged Pull Requests: 
-      <%= @github_service.get_total_pull_requests %>
-    </div>
-  </div>
+ 
 </html>
