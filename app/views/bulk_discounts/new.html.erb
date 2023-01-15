@@ -1,0 +1,27 @@
+<header>
+  <h1 class="main-title">Little Esty Shop</h1>
+
+  <div class="sub-header">
+    <h2 class="page-title"><%= @merchant.name %></h2>
+      <nav class="navigation">
+      <%= link_to "Dashboard", "/merchants/#{@merchant.id}/dashboard" %>
+      <%= link_to "My Items", "/merchants/#{@merchant.id}/items" %>
+      <%= link_to "My Invoices", "/merchants/#{@merchant.id}/invoices" %>
+      <%= link_to "My Bulk Discounts", merchant_bulk_discounts_path(@merchant.id) %>
+      </nav>
+  </div>
+</header>
+
+<h3><center>Create a New Discount<center></h3><br/>
+
+<section>
+<%= form_with url: merchant_bulk_discounts_path(@merchant.id), method: :post, local: true do |form| %>
+<%= form.label :name %>
+<%= form.text_field :name %>
+<%= form.label :percent_discount %>
+<%= form.text_field :percent_discount %>
+<%= form.label :quantity_threshold %>
+<%= form.text_field :quantity_threshold %>
+<%= form.submit "Submit" %>
+<% end %>
+</section>
