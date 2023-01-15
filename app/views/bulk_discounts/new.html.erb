@@ -12,16 +12,16 @@
   </div>
 </header>
 
-<h3><center>My Discounts<center></h3>
+<h3><center>Create a New Discount<center></h3><br/>
 
-<%= link_to "Create a New Discount", new_merchant_bulk_discount_path(@merchant.id) %>
-
-<% @bulk_discounts.each do |discount| %>
-  <div id="discount-<%= discount.id %>">
-    <%=link_to "#{discount.name}", merchant_bulk_discount_path(@merchant.id, discount.id) %>
-      <ul>
-        <li>Discount: <%= discount.percent_discount %>%</li>
-        <li>Quantity threshold: <%= discount.quantity_threshold %></li>
-      </ul>
-  </div>
+<section>
+<%= form_with url: merchant_bulk_discounts_path(@merchant.id), method: :post, local: true do |form| %>
+<%= form.label :name %>
+<%= form.text_field :name %>
+<%= form.label :percent_discount %>
+<%= form.text_field :percent_discount %>
+<%= form.label :quantity_threshold %>
+<%= form.text_field :quantity_threshold %>
+<%= form.submit "Submit" %>
 <% end %>
+</section>
