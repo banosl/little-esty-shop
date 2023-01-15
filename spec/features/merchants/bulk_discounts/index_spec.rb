@@ -156,5 +156,20 @@ RSpec.describe 'Bulk Discount Index' do
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_3.id))
       expect(page).to have_content("75% Off")
     end
+
+    it "next to each bulk discount is a button to delete it" do
+      visit merchant_bulk_discounts_path(@merchant_1.id)
+
+      within "#discount-#{@bulk_discount_1.id}" do
+        expect(page).to have_button("Delete")
+      end
+
+      within "#discount-#{@bulk_discount_2.id}" do
+        expect(page).to have_button("Delete")
+      end
+    end
+
+    it "when a delete button is clicked the user is redirected back to the bulk discounts index page
+      and the discount is no longer listed"
   end
 end
