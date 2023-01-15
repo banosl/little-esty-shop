@@ -118,6 +118,12 @@ RSpec.describe 'Bulk Discount Index' do
       end
     end
 
-    it "each bulk discount listed includes a link to its show page"
+    it "each bulk discount listed includes a link to its show page" do
+      visit merchant_bulk_discounts_path(@merchant_2.id)
+
+      expect(page).to have_link("#{@bulk_discount_4.name}", :href=>merchant_bulk_discount_path(@merchant_2.id, @bulk_discount_4.id))
+      expect(page).to have_link("#{@bulk_discount_5.name}", :href=>merchant_bulk_discount_path(@merchant_2.id, @bulk_discount_5.id))
+      expect(page).to have_link("#{@bulk_discount_6.name}", :href=>merchant_bulk_discount_path(@merchant_2.id, @bulk_discount_6.id))
+    end
   end
 end
