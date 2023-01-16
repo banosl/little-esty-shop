@@ -110,7 +110,7 @@ RSpec.describe 'Bulk Discount Show', type: :feature do
       expect(page).to have_content("#{@bulk_discount_1.name}")
       expect(page).to_not have_content("#{@bulk_discount_8.name}")
       expect(page).to have_content("Quantity threshold: #{@bulk_discount_1.quantity_threshold}")
-      expect(page).to have_content("Percent discount: #{@bulk_discount_1.percent_discount}%")
+      expect(page).to have_content("Discount: #{@bulk_discount_1.percent_discount}%")
     end
 
     it "see link to edit the discount" do
@@ -132,6 +132,18 @@ RSpec.describe 'Bulk Discount Show', type: :feature do
     end
 
     it "in the edit page when any information is changed and submit is selected, 
-    the user is redirected to the bulk discount's show page with the changes shown"
+    the user is redirected to the bulk discount's show page with the changes shown" do
+      visit edit_merchant_bulk_discount_path(@merchant_1.id, @bulk_discount_1.id)
+
+      expect(page).to have_field(:name, :with => "10% Off")
+      fill_in :name, with: "5% Off"
+      fill_in :percent_discount, with: 5
+      fill_in :quantity_threshold, with: 2
+      click_button "Submit"
+
+      expect(current_path).to eq(merchant_bulk_discount_path(@merchant_1.id, @bulk_discount_1.id))
+      expect(page).to have_content("Discount: 5%")
+      expect(page).to have_content("Quantity threshold: 2")
+    end
   end
 end

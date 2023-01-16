@@ -29,6 +29,17 @@ class BulkDiscountsController < ApplicationController
     @discount = BulkDiscount.find(params[:id])
   end
 
+  def update
+    merchant = Merchant.find(params[:merchant_id])
+    discount = BulkDiscount.find(params[:id])
+    
+    if discount.update(strong_params_bulk_discount)
+      redirect_to merchant_bulk_discount_path(merchant.id, discount.id)
+    else
+      redirect_to edit_merchant_bulk_discount_path(merchant.id, discount.id), notice: "Please enter valid data."
+    end
+  end
+
   def destroy
     merchant = Merchant.find(params[:merchant_id])
     discount = BulkDiscount.find(params[:id])
