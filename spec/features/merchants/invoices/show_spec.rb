@@ -4,6 +4,17 @@ RSpec.describe 'Merchant Invoice Show Page' do
   before :each do 
     @merchant_1 = Merchant.create!(name: 'Schroeder-Jerde')
     @merchant_2 = Merchant.create!(name: 'Catz')
+    @merchant_3 = Merchant.create!(name: 'Willms and Sons')
+
+    #bulk_discounts
+    @bulk_discount_1 = @merchant_1.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 5})
+    @bulk_discount_2 = @merchant_1.bulk_discounts.create!({name: "20% Off", percent_discount: 20, quantity_threshold: 15})
+    @bulk_discount_3 = @merchant_1.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 25})
+    @bulk_discount_4 = @merchant_2.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 15})
+    @bulk_discount_5 = @merchant_2.bulk_discounts.create!({name: "25% Off", percent_discount: 25, quantity_threshold: 35})
+    @bulk_discount_6 = @merchant_2.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 45})
+    @bulk_discount_7 = @merchant_3.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 25})
+    @bulk_discount_8 = @merchant_3.bulk_discounts.create!({name: "40% Off", percent_discount: 40, quantity_threshold: 55})
 
     @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
     @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
@@ -99,5 +110,15 @@ RSpec.describe 'Merchant Invoice Show Page' do
       expect(find(:table, "Items")).to have_table_row("Status" => "packaged")
       expect(current_path).to eq(merchant_invoice_path(@merchant_1.id, @invoice_1.id))
     end
+  end
+
+  describe "bulk discount user story 6" do
+    it "see the total revenue for my merchant from this invoice (not including discounts)" do
+      visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
+save_and_open_page
+      expect(page).to have_content(@invoice_1.total_revenue_in_dollars)
+    end
+
+    it "see the total discounted revenue for merchant from this invoice which includes bulk discounts int he calculation"
   end
 end
