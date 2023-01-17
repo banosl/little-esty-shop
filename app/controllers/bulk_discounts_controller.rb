@@ -4,6 +4,8 @@ class BulkDiscountsController < ApplicationController
     @bulk_discounts = @merchant.bulk_discounts
     load_holidays = NagerService.new
     @holidays = load_holidays.get_next_public_holidays
+    # binding.pry
+
   end
 
   def show

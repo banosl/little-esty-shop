@@ -15,9 +15,9 @@
 <section id="holidays">
   <h3>Upcoming Holidays</h3>
   <ol>
-    <li><% @holidays[0].localname %> On: <%@holidays[0].date%></li>
-    <li><% @holidays[1].localname %> On: <%@holidays[0].date%></li>
-    <li><% @holidays[2].localname %> On: <%@holidays[0].date%></li>
+    <li><%= @holidays[0].localname %> on: <%=@holidays[0].date.to_date.strftime("%A, %B %d, %Y") %></li>
+    <li><%= @holidays[1].localname %> on: <%=@holidays[1].date.to_date.strftime("%A, %B %d, %Y") %></li>
+    <li><%= @holidays[2].localname %> on: <%=@holidays[2].date.to_date.strftime("%A, %B %d, %Y") %></li>
   </ol>
 
 </section>

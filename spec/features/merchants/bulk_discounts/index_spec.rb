@@ -192,7 +192,7 @@ RSpec.describe 'Bulk Discount Index' do
         visit merchant_bulk_discounts_path(@merchant_1.id)
 save_and_open_page
         within "#holidays" do
-          expect(page).to have_content("On: ")
+          expect(page).to have_content("on: ")
         end
       end
     end
