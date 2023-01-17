@@ -174,6 +174,7 @@ RSpec.describe Invoice, type: :model do
       
       InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_3.id, quantity: 10, unit_price: 100, status: 'pending')
       
+      
       @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
       @transaction_2 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
       @transaction_3 = @invoice_2.transactions.create!(credit_card_number: '4580251236515201', credit_card_expiration_date: '03/22/20', result: 'success')
