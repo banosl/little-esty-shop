@@ -180,5 +180,15 @@ RSpec.describe 'Bulk Discount Index' do
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1.id))
       expect(page).to_not have_content(@bulk_discount_1.name)
     end
+
+    describe "Holidays API User Story" do
+      it "see a section with a header of 'Upcoming Holidays'" do
+        visit merchant_bulk_discounts_path(@merchant_1.id)
+
+        expect(page).to have_content("Upcoming Holidays")
+      end
+
+      it "the holidays section has the name and date of the next 3 upcoming US holidays listed"
+    end
   end
 end
