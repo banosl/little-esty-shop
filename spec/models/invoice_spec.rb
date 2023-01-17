@@ -8,6 +8,7 @@ RSpec.describe Invoice, type: :model do
     it {should have_many(:items).through(:invoice_items)}
     it {should have_many :transactions}
     it {should have_many(:merchants).through(:items)}
+    it {should have_many(:bulk_discounts).through(:merchants)}
   end
 
   describe 'validations' do
@@ -145,10 +146,18 @@ RSpec.describe Invoice, type: :model do
     before :each do 
       @merchant_1 = Merchant.create!(name: 'Schroeder-Jerde')
       @merchant_2 = Merchant.create!(name: 'Rempel and Jones')
+
+      #bulk_discounts
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 5})
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!({name: "20% Off", percent_discount: 20, quantity_threshold: 15})
+      @bulk_discount_3 = @merchant_1.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 25})
+      @bulk_discount_4 = @merchant_2.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 15})
+      @bulk_discount_5 = @merchant_2.bulk_discounts.create!({name: "25% Off", percent_discount: 25, quantity_threshold: 35})
+      @bulk_discount_6 = @merchant_2.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 45})
     
-      @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
-      @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
-      @item_3 = @merchant_2.items.create!(name: 'Ea Voluptatum', description: 'Sunt officia eum qui molestiae', unit_price: 32301)
+      @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107) #merchant 2
+      @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076) #merchant 2
+      @item_3 = @merchant_2.items.create!(name: 'Ea Voluptatum', description: 'Sunt officia eum qui molestiae', unit_price: 32301) #merchant 1
       
       @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Ondricka')
       @customer_2 = Customer.create!(first_name: 'Cecelia', last_name: 'Osinski')
@@ -167,9 +176,7 @@ RSpec.describe Invoice, type: :model do
       
       @transaction_1 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'failed')
       @transaction_2 = @invoice_1.transactions.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: '04/22/20', result: 'success')
-      
       @transaction_3 = @invoice_2.transactions.create!(credit_card_number: '4580251236515201', credit_card_expiration_date: '03/22/20', result: 'success')
-
       @transaction_4 = @invoice_3.transactions.create!(credit_card_number: '4354495077693036', credit_card_expiration_date: '09/22/20', result: 'failed')
     end
 
@@ -177,6 +184,13 @@ RSpec.describe Invoice, type: :model do
       it 'returns the total revenue for all invoice items' do
         expect(@invoice_1.total_revenue).to eq(3000)
         expect(@invoice_2.total_revenue).to eq(2100)
+      end
+    end
+
+    describe "discounted_revenue_in_dollars" do
+      it 'returns the total revenue for all invoice items with any applicable discounts' do
+        expect(@invoice_1.discounted_revenue_in_dollars).to eq(22)
+        expect(@invoice_2.discounted_revenue_in_dollars).to eq(18.90)
       end
     end
   end
