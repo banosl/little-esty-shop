@@ -120,6 +120,22 @@ RSpec.describe 'Merchant Invoice Show Page' do
       expect(page).to have_content("Discounted Revenue: $#{@invoice_1.discounted_revenue_in_dollars}")
     end
 
-    it "see the total discounted revenue for merchant from this invoice which includes bulk discounts in the calculation"
+    it "see the total discounted revenue for merchant from this invoice which includes bulk discounts in the calculation" do
+      visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
+
+      expect(page).to have_content("Discounted Revenue: $#{@invoice_1.discounted_revenue_in_dollars}")
+    end
+  end
+
+  describe "bulk disocunt user story 7" do
+    it "each invoice item has a link to the show  page for teh bulk disocunt that was appied if any" do
+      visit merchant_invoice_path(@merchant_1.id, @invoice_1.id)
+    
+      expect(find(:table, "Items")).to have_table_row("Discount Applied" => @bulk_discount_1.name)
+
+      visit merchant_invoice_path(@merchant_2.id, @invoice_3.id)
+
+      expect(find(:table, "Items")).to have_table_row("Discount Applied" => "")
+    end
   end
 end

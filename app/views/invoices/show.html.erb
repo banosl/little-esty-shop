@@ -37,6 +37,7 @@
         <th>Quantity</th>
         <th>Unit Price</th>
         <th>Status</th>
+        <th>Discount Applied</th>
       </tr>
   
     <% @invoice_items.each do |invoice_item| %>
@@ -50,6 +51,7 @@
             <%= f.hidden_field :invoice_item_id, value: invoice_item.id %>
             <%= f.submit "Update Item Status" %>
             <% end %></td>
+          <td><%= invoice_item.discount_applied %></td>
         </div>
       </tr>
     <% end %>
