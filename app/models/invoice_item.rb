@@ -15,4 +15,17 @@ class InvoiceItem < ApplicationRecord
   def item_name
     Item.find(self.item_id).name
   end
+
+  def discount_applied
+    discount = bulk_discounts
+    .where("? >= bulk_discounts.quantity_threshold", quantity)
+    .select("(invoice_items.quantity * invoice_items.unit_price) - (invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percent_discount/100) as math, invoice_items.*, bulk_discounts.*, bulk_discounts.name as discount")
+    .order("math")
+    .where(invoice_items:{quantity: quantity})
+    .first
+
+    if discount != nil
+      discount.name
+    end
+  end
 end

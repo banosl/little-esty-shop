@@ -27,7 +27,7 @@ class Invoice < ApplicationRecord
   end
 
   def discounted_revenue_in_dollars
-    c = invoice_items
+    discounted = invoice_items
     .joins(:bulk_discounts)
     .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
     .select("(invoice_items.quantity * invoice_items.unit_price) - (invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percent_discount/100) as math, invoice_items.*, bulk_discounts.*")
@@ -35,10 +35,13 @@ class Invoice < ApplicationRecord
     .order("math")
     .limit(invoice_items.count)
 
-    total = c.sum do |revenue|
-      revenue.math
+    if discounted != []
+      total =  discounted.sum do |revenue|
+        revenue.math
+      end
+      total/100.to_f.round(2)
+    else
+      total_revenue_in_dollars
     end
-
-    total/100.to_f.round(2)
   end
 end
