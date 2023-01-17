@@ -7,6 +7,14 @@ RSpec.describe "Admin/Invoices/Show" do
       @merchant_2 = Merchant.create!(name: 'Rempel and Jones', status: :enabled)
       @merchant_3 = Merchant.create!(name: 'Willms and Sons', status: :disabled)
 
+      #bulk_discounts
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 5})
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!({name: "20% Off", percent_discount: 20, quantity_threshold: 15})
+      @bulk_discount_3 = @merchant_1.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 25})
+      @bulk_discount_4 = @merchant_2.bulk_discounts.create!({name: "10% Off", percent_discount: 10, quantity_threshold: 15})
+      @bulk_discount_5 = @merchant_2.bulk_discounts.create!({name: "25% Off", percent_discount: 25, quantity_threshold: 35})
+      @bulk_discount_6 = @merchant_2.bulk_discounts.create!({name: "30% Off", percent_discount: 30, quantity_threshold: 45})
+
       @item_1 = @merchant_1.items.create!(name: 'Qui Esse', description: 'Nihil autem sit odio inventore deleniti', unit_price: 75107)
       @item_2 = @merchant_1.items.create!(name: 'Autem Minima', description: 'Cumque consequuntur ad', unit_price: 67076)
       @item_3 = @merchant_1.items.create!(name: 'Ea Voluptatum', description: 'Sunt officia eum qui molestiae', unit_price: 32301)
@@ -192,6 +200,19 @@ RSpec.describe "Admin/Invoices/Show" do
        
         expect(current_path).to eq("/admin/invoices/#{@invoice_5.id}")
         expect(page).to have_field(:status, :with => "in progress")
+      end
+    end
+
+    describe "bulk discounts user story 8" do
+      it "see total revenue from this invoice (not including discounts)" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+        expect(page).to have_content("Total Revenue: $#{@invoice_1.total_revenue_in_dollars}")
+      end
+
+      it "see the total discounted revenue from this invoice which includeds bulk discounts in the calculation" do
+        visit "/admin/invoices/#{@invoice_1.id}"
+
+        expect(page).to have_content("Discounted Revenue: $#{@invoice_1.discounted_revenue_in_dollars}")
       end
     end
   end
