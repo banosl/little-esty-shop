@@ -192,6 +192,7 @@ RSpec.describe Invoice, type: :model do
       it 'returns the total revenue for all invoice items with any applicable discounts' do
         expect(@invoice_1.discounted_revenue_in_dollars).to eq(22)
         expect(@invoice_2.discounted_revenue_in_dollars).to eq(18.90)
+        expect(@invoice_3.discounted_revenue_in_dollars).to eq(10.00)
       end
     end
   end
