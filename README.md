@@ -36,9 +36,13 @@ After completion of the group project a solo extension titled Bulk Discounts was
 * [Evaluation](https://github.com/turingschool-examples/little-esty-shop/blob/main/doc/evaluation.md)
 * [Bulk Discounts Solo Project Extension](https://backend.turing.edu/module2/projects/bulk_discounts/)
 
-## Collaborators
+## Group Project Collaborators
 
 1. Leo Banos Garcia https://github.com/banosl
 1. Matisse Mallette https://github.com/matissemallette
 1. Kelsie Porter https://github.com/kelsieporter
 1. Anhnhi Tran https://github.com/anhtran811
+
+## Solo Project Collaborator
+
+1. Leo Banos Garcia
