@@ -1,0 +1,11 @@
+<header>
+ <h1 class="main-title">Little Esty Shop</h1>
+
+  <div class="sub-header">
+    <h2 class="page-title">Merchants</h2>
+  </div>
+</header>
+
+<% @merchants.each do |merchant| %>
+  <%= link_to "#{merchant.name}", "/merchants/#{merchant.id}/dashboard" %><br/>
+<% end %>

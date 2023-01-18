@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   
   #merchants
   get '/', to: 'application#welcome'
+
+  get "/merchants", to: "merchants#index"
   get '/merchants/:id/dashboard', to: 'merchants#show'
   resources :merchants do
     resources :invoices, only: [:index, :show, :update]
