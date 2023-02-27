@@ -4,7 +4,7 @@
 
 "Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. The learning goals for this project included practice designing a normalized database schema and defining model relationships, utilizing advanced routing techniques, utilizing advanced Active Record techniques to perform complex database queries, and to practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code.
 
-After completion of the group project a solo extension titled Bulk Discounts was added. This adds a feature for merchants to be able to add bulk discounts that apply to their items only after a self determined threshold. The project also consumes a public holidays API to display the next 3 US holidays in the bulk discounts index page.
+After completion of the group project a solo extension titled Bulk Discounts was added. This adds a feature for merchants to be able to add bulk discounts that apply to their items only after a self determined threshold. This required implementing advanced active record queries. The project also consumes a public holidays API to display the next 3 US holidays in the bulk discounts index page.
 
 ## :thumbsup:Requirements<br>
 :heavy_check_mark:Rails 5.2.x<br>
